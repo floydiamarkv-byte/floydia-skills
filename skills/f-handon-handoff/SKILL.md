@@ -44,7 +44,7 @@ Selecciona una acción respondiendo con el **número** correspondiente:
    ↳ Muestra el contenido resumido de `memory-bank/core/notes-next-session.md`.
 
 4️⃣ **Auditar Estado de Servidores & Procesos Locales**
-   ↳ Comprueba puertos activos (Vite, WordPress, Playwright NODE_HYBRID :3000, StorageSync :8384).
+   ↳ Comprueba puertos activos (Vite, WordPress, Playwright CT114 :3000, Syncthing :8384).
 
 0️⃣ **Salir**
 ```
@@ -92,11 +92,11 @@ Escribir exclusivamente en:
 ```
 
 ### 3. Actualización de Puntero Inmediato
-Actualizar [`memory-bank/core/notes-next-session.md`](file:///memory-bank/core/notes-next-session.md) con el enlace y resumen de este último handoff.
+Actualizar [`memory-bank/core/notes-next-session.md`](file:///home/tec/Dropbox/ANTIGRAVITY_PROJECTS/memory-bank/core/notes-next-session.md) con el enlace y resumen de este último handoff.
 
 ### 4. Entrega del Prompt de Reanudación
 ```text
-@[/memory-bank/journal/<archivo_handoff>.md] handon!!
+@[/home/tec/Dropbox/ANTIGRAVITY_PROJECTS/memory-bank/journal/<archivo_handoff>.md] handon!!
 ```
 
 ---

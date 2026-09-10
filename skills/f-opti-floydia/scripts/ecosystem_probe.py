@@ -6,12 +6,12 @@ Script de telemetría y diagnóstico 100% no invasivo y de solo lectura.
 Audita en paralelo:
 1. HP15 Local: CPU, RAM, ZRAM, PSI (Pressure Stall), I/O, Load Average, Sockets y Procesos.
 2. Nodos Remotos (TCP Probes con timeout de 1.5s):
-   - MikroTik Gateway (:80)
-   - HP45 Réplica (:22)
-   - Proxmox PVE (:8006)
-   - NODE_HYBRID Playwright WS (:3000)
-   - NODE_HYBRID FlareSolverr (:8191)
-   - NODE_VAULT StorageSync Vault (:8384)
+   - MikroTik Gateway (192.168.1.1:80)
+   - HP45 Réplica (192.168.1.200:22)
+   - Proxmox PVE (192.168.1.220:8006)
+   - CT114 Playwright WS (192.168.1.238:3000)
+   - CT114 FlareSolverr (192.168.1.238:8191)
+   - CT106 Syncthing Vault (192.168.1.232:8384)
 3. DNS & Latencia de APIs de IA (Google AI, Anthropic, OpenRouter).
 4. Servidores MCP y Token Budget del Memory Bank.
 
@@ -130,7 +130,7 @@ def get_active_mcps():
 
 def get_token_budget():
     """Verifica el tamaño de activeContext.md."""
-    ctx_path = "/memory-bank/core/activeContext.md"
+    ctx_path = "/home/tec/Dropbox/ANTIGRAVITY_PROJECTS/memory-bank/core/activeContext.md"
     if os.path.exists(ctx_path):
         try:
             with open(ctx_path, "r", encoding="utf-8") as f:
@@ -153,12 +153,12 @@ def run_full_probe():
     
     # 1. Nodos de infraestructura
     infra_targets = {
-        "MikroTik Gateway": ("", 80),
-        "HP45 Réplica": ("", 22),
-        "Proxmox PVE": ("", 8006),
-        "NODE_HYBRID Playwright WS": ("", 3000),
-        "NODE_HYBRID FlareSolverr": ("", 8191),
-        "NODE_VAULT StorageSync Vault": ("", 8384),
+        "MikroTik Gateway": ("192.168.1.1", 80),
+        "HP45 Réplica": ("192.168.1.200", 22),
+        "Proxmox PVE": ("192.168.1.220", 8006),
+        "CT114 Playwright WS": ("192.168.1.238", 3000),
+        "CT114 FlareSolverr": ("192.168.1.238", 8191),
+        "CT106 Syncthing Vault": ("192.168.1.232", 8384),
     }
     
     network_results = {}

@@ -23,7 +23,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 
-WORKSPACE = ""
+WORKSPACE = "/home/tec/Dropbox/ANTIGRAVITY_PROJECTS"
 SKILLS_SOURCE = os.path.join(WORKSPACE, ".agents/skills")
 OPENCODE_SKILLS = os.path.expanduser("~/.opencode/skills")
 HERMES_SKILLS = os.path.expanduser("~/.hermes/skills")

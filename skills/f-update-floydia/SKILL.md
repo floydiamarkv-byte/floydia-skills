@@ -19,7 +19,7 @@ triggers:
 
 # Skill: Suite de Actualización & Disaster Recovery (`f-update-floydia` v5.2)
 
-> **Propósito**: Proveer un pipeline determinista y verificable para el mantenimiento integral del ecosistema FloydIA (Host HP15, Proxmox NODE_VAULT/NODE_HYBRID, MikroTik y Réplica HP45), indexación semántica de activos visuales y regeneración de `CODEX_FLOYDIA.md`.
+> **Propósito**: Proveer un pipeline determinista y verificable para el mantenimiento integral del ecosistema FloydIA (Host HP15, Proxmox CT106/CT114, MikroTik y Réplica HP45), indexación semántica de activos visuales y regeneración de `CODEX_FLOYDIA.md`.
 
 ---
 
@@ -40,7 +40,7 @@ Selecciona una acción respondiendo con el **número** correspondiente:
 2️⃣ **Catálogo Visual & Metadatos Semánticos de Imágenes** 📸
    ↳ Ejecuta `index_workspace_images.py` en paralelo. Extrae dimensiones, DPI, ratios, tipo MIME, hash SHA256 y genera descripciones semánticas completas y textos ALT. Actualiza `IMAGE_KNOWLEDGE_GRAPH_WORKSPACE.json` e `IMAGE_CATALOG.md`.
 
-3️⃣ **Compactación del Memory Bank & Auditoría StorageSync**
+3️⃣ **Compactación del Memory Bank & Auditoría Syncthing**
    ↳ Ejecuta `memory_compactor.py` bajo lock exclusivo, valida token budget (`activeContext.md` ≤ 400 tokens) y audita `.sync-conflict`.
 
 4️⃣ **Auditoría de Sistema, Paquetes & Agentes IA (Arch / AUR / Flatpak / DSH / OpenCode)**
@@ -72,7 +72,7 @@ python3 SCRIPTS/update_floydia.py --full --yes --verbose
 # Módulos específicos
 python3 SCRIPTS/update_floydia.py --system --dry-run   # OS, AUR, Flatpaks, Firmware, NPM Agents (DSH, OpenCode)
 python3 SCRIPTS/update_floydia.py --images             # Solo Catálogo Visual & Metadatos Semánticos
-python3 SCRIPTS/update_floydia.py --memory            # Solo Memory Bank y StorageSync
+python3 SCRIPTS/update_floydia.py --memory            # Solo Memory Bank y Syncthing
 python3 SCRIPTS/update_floydia.py --graph             # Solo Graphify AST
 python3 SCRIPTS/update_floydia.py --codex             # Solo CODEX_FLOYDIA.md
 python3 SCRIPTS/update_floydia.py --verify            # Solo smoke tests y validación DSH
@@ -86,7 +86,7 @@ python3 SCRIPTS/update_floydia.py --verify            # Solo smoke tests y valid
 graph TD
     F0["Fase 0: Preflight & Snapshot"] --> F1["Fase 1: Lock & Logging"]
     F1 --> F2["Fase 2: OS, AUR, Firmware & Agentes IA"]
-    F2 --> F3["Fase 3: Memory Bank & StorageSync"]
+    F2 --> F3["Fase 3: Memory Bank & Syncthing"]
     F3 --> F3B["Fase 3B: Catálogo Visual"]
     F3B --> F4["Fase 4: Graphify AST"]
     F4 --> F5["Fase 5: CODEX_FLOYDIA.md"]
@@ -94,7 +94,7 @@ graph TD
     F6 --> F7["Fase 7: Sincronización Multi-Agente"]
 ```
 
-1. **Fase 0 (Preflight)**: Introspección de Host HP15, permisos `chmod 600` en `${HOME}/secrets/environment.env`, conectividad LAN (NODE_VAULT, NODE_HYBRID, MikroTik).
+1. **Fase 0 (Preflight)**: Introspección de Host HP15, permisos `chmod 600` en `/home/tec/.secrets/antigravity.env`, conectividad LAN (CT106, CT114, MikroTik).
 2. **Fase 1 (Control)**: Lock exclusivo `fcntl.flock` sobre `/tmp/update_floydia.lock` y logging JSONL.
 3. **Fase 2 (Sistema & Agentes)**: Mirrorlist HTTPS, `checkupdates`, `yay -Syu --noconfirm` (solo con `--yes`), Flatpaks, `fwupdmgr` y auditoría de agentes NPM (`@deepseek-ai/dsh`, `opencode-ai`).
 4. **Fase 3 (Memoria)**: `memory_compactor.py`, `boot_budget_check.py` (`activeContext.md` ≤ 400 tokens) y escaneo de `.sync-conflict` (prohibido borrarlos en automático).
@@ -110,7 +110,7 @@ graph TD
 
 1. **Zero-Leak**: Toda credencial se enmascara `[REDACTED]`.
 2. **Non-Destructive**: Comandos destructivos requieren `--yes`.
-3. **Permisos de Secretos**: Si `environment.env` != 600 ➔ ejecutar `chmod 600 ${HOME}/secrets/environment.env`.
+3. **Permisos de Secretos**: Si `antigravity.env` != 600 ➔ ejecutar `chmod 600 /home/tec/.secrets/antigravity.env`.
 4. **Token Budget Excedido**: Si `activeContext.md` > 400 tokens ➔ ejecutar `python3 SCRIPTS/boot_budget_check.py --fix`.
 5. **Configuración DSH**: Si `dsh --profile web --dump-config` falla ➔ verificar `~/.dsh/profiles/web/cordis.patch.yml` contra la plantilla en `SCRIPTS/setup_dsh_hp45.sh`.
 

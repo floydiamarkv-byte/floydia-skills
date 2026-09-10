@@ -35,7 +35,7 @@ Selecciona una acción respondiendo con el **número** correspondiente:
 
 1️⃣ **Diagnóstico Completo del Ecosistema**
    ↳ Sonda `ecosystem_probe.py`: HP15 (CPU, RAM, ZRAM, PSI, Load), HP45, MikroTik
-     (), Proxmox (), NODE_HYBRID Playwright (:3000), NODE_VAULT (:8384),
+     (192.168.1.1), Proxmox (192.168.1.220), CT114 Playwright (:3000), CT106 (:8384),
      MCPs, Token Budget + estado de BACKUP (último manifest SHA256), HEARTBEATS y LOGS
      de `guard_command`.
 
@@ -55,7 +55,7 @@ Selecciona una acción respondiendo con el **número** correspondiente:
      LINUX_PROXMOX / PROMPT_ENGINEERING.
 
 5️⃣ **Auditoría de Red, MikroTik & APIs de IA**
-   ↳ Mide latencias TCP hacia Proxmox NODE_HYBRID (Playwright WS), NODE_VAULT, RouterOS y
+   ↳ Mide latencias TCP hacia Proxmox CT114 (Playwright WS), CT106, RouterOS y
      resolución DNS de Google AI, Anthropic y OpenRouter.
 
 6️⃣ **Rescate de Emergencia Anti-Hang (< 1s)**
@@ -90,8 +90,8 @@ Selecciona una acción respondiendo con el **número** correspondiente:
 
 1. **P1 — Read-First & Observabilidad**: Siempre ejecutar `ecosystem_probe.py` antes de proponer cualquier cambio.
 2. **P2 — Fail-Closed & Zero Destructive**: Ante cualquier error o duda, el sistema no se modifica.
-3. **P3 — Prohibición de `sync` Global**: Prohibido invocar `sync` en carpetas sincronizadas (CloudStorage/StorageSync) para evitar I/O stalls en Xorg/Electron.
-4. **P4 — Protección de Procesos Críticos (Lista Blanca Estricta)**: Nunca terminar procesos de Antigravity IDE, LSPs (`jedi`, `tsserver`), StorageSync ni demonios de sistema.
+3. **P3 — Prohibición de `sync` Global**: Prohibido invocar `sync` en carpetas sincronizadas (Dropbox/Syncthing) para evitar I/O stalls en Xorg/Electron.
+4. **P4 — Protección de Procesos Críticos (Lista Blanca Estricta)**: Nunca terminar procesos de Antigravity IDE, LSPs (`jedi`, `tsserver`), Syncthing ni demonios de sistema.
 5. **P5 — Hardening de Python**: Todo script se ejecuta con `SCRIPTS/safe_run_python.sh` (timeout duro, `stdin` a `/dev/null` y `nice -n 10`).
 6. **P6 — Sanitización de Secretos**: Ningún prompt, log o reporte debe exponer claves o tokens del `.env`; usar siempre `${VARIABLE}` o `[REDACTED]`.
 7. **P7 — Clasificación de Egreso (§5 agents-overlay.md, 2026-09-01)**: Los Prompts Duales deben clasificar los datos (PÚBLICO/INTERNO/CLIENTE/CONFIDENCIAL/SECRETO); datos CLIENTE o SECRETO JAMÁS salen del entorno. En duda → clase superior, no enviar.
@@ -142,32 +142,32 @@ python3 .agents/skills/f-opti-floydia/scripts/dual_prompt_generator.py
 
 1. **Verificar el último backup del ecosistema** (P8 — no certificar sin artefacto):
 ```bash
-ls -la ${HOME}/CloudStorage/BACKUP_MEM_ENV/                    # alternativo: /mnt/nas/BACKUP_MEM_ENV
-cd ${HOME}/CloudStorage/BACKUP_MEM_ENV && sha256sum -c *.sha256   # debe decir "La suma coincide"
-tail -2 /SCRIPTS/logs/backup_ecosistema.log  # línea "OK"
-ls -la ${HOME}/.cache/cron_heartbeats/backup_ecosistema       # heartbeat presente
+ls -la /home/tec/Dropbox/BACKUP_MEM_ENV/                    # alternativo: /mnt/nas/BACKUP_MEM_ENV
+cd /home/tec/Dropbox/BACKUP_MEM_ENV && sha256sum -c *.sha256   # debe decir "La suma coincide"
+tail -2 /home/tec/Dropbox/ANTIGRAVITY_PROJECTS/SCRIPTS/logs/backup_ecosistema.log  # línea "OK"
+ls -la /home/tec/.cache/cron_heartbeats/backup_ecosistema       # heartbeat presente
 # un .age SIN su .sha256 = backup parcial → NO certificar y borrar
 ```
 
 2. **Prueba de restauración** (no destructiva, en scratch/):
 ```bash
-mkdir -p /scratch/restore_probe
-ls -1 ${HOME}/CloudStorage/BACKUP_MEM_ENV/eco_backup_*.tar.gz.age | head -1 | \
-  xargs -I{} age -d -i ${HOME}/secrets/age.key {} | tar -tzf - | head -20
+mkdir -p /home/tec/Dropbox/ANTIGRAVITY_PROJECTS/scratch/restore_probe
+ls -1 /home/tec/Dropbox/BACKUP_MEM_ENV/eco_backup_*.tar.gz.age | head -1 | \
+  xargs -I{} age -d -i /home/tec/.secrets/age.key {} | tar -tzf - | head -20
 # Lista contenidos SIN extraer: verifica integridad del archivo cifrado sin escribir nada en el workspace
 ```
 
 3. **Estado del enforcement mecánico**:
 ```bash
-echo 'echo test_safe' | python3 /SCRIPTS/guard_command.py && echo "guard PERMITE seguro"
-echo 'rm -rf /tmp/x' | python3 /SCRIPTS/guard_command.py ; echo "guard BLOQUEA destructivo (exit=$?)"
-tail -5 /SCRIPTS/logs/guard_command.log 2>/dev/null
+echo 'echo test_safe' | python3 /home/tec/Dropbox/ANTIGRAVITY_PROJECTS/SCRIPTS/guard_command.py && echo "guard PERMITE seguro"
+echo 'rm -rf /tmp/x' | python3 /home/tec/Dropbox/ANTIGRAVITY_PROJECTS/SCRIPTS/guard_command.py ; echo "guard BLOQUEA destructivo (exit=$?)"
+tail -5 /home/tec/Dropbox/ANTIGRAVITY_PROJECTS/SCRIPTS/logs/guard_command.log 2>/dev/null
 ```
 
 4. **Heartbeats de crons**:
 ```bash
-python3 /SCRIPTS/check_heartbeats.py; echo "exit=$?"
-cat ${HOME}/.cache/cron_heartbeats/ALERT_CRONS_MUERTOS 2>/dev/null || echo "sin alertas activas"
+python3 /home/tec/Dropbox/ANTIGRAVITY_PROJECTS/SCRIPTS/check_heartbeats.py; echo "exit=$?"
+cat /home/tec/.cache/cron_heartbeats/ALERT_CRONS_MUERTOS 2>/dev/null || echo "sin alertas activas"
 ```
 
 5. **Reporte estructurado** (tabla): componente | estado | evidencia (ruta/comando) | severidad:
@@ -242,13 +242,13 @@ ps aux | grep -E '(hermes|opencode|antigravity|gemini|deepseek|claude)' | grep -
   awk '{printf "%-10s PID:%-6s CPU:%-5s MEM:%-5s CMD:%s\n", $1, $2, $3, $4, $11}'
 
 # Symlinks de skills (verificar integridad en TODOS los agentes: Antigravity/, OpenCode, Codex, Hermes)
-find ${HOME}/.opencode/skills/ -type l -exec sh -c 'test -e "$1" || echo "ROTO: $1"' _ {} \;
-find ${HOME}/.codex/skills/ -type l -exec sh -c 'test -e "$1" || echo "ROTO: $1"' _ {} \;
-find ${HOME}/.hermes/skills/ -type l -exec sh -c 'test -e "$1" || echo "ROTO: $1"' _ {} \; 2>/dev/null
-find /.agents/skills/ -maxdepth 1 -type d -name 'f-*' | wc -l
+find /home/tec/.opencode/skills/ -type l -exec sh -c 'test -e "$1" || echo "ROTO: $1"' _ {} \;
+find /home/tec/.codex/skills/ -type l -exec sh -c 'test -e "$1" || echo "ROTO: $1"' _ {} \;
+find /home/tec/.hermes/skills/ -type l -exec sh -c 'test -e "$1" || echo "ROTO: $1"' _ {} \; 2>/dev/null
+find /home/tec/Dropbox/ANTIGRAVITY_PROJECTS/.agents/skills/ -maxdepth 1 -type d -name 'f-*' | wc -l
 
 # MCPs activos en configuración
-python3 -c "import json; d=json.load(open('${HOME}/.gemini/config/mcp_config.json')); print(f'MCPs configurados: {len(d.get(\"mcpServers\",{}))}'); [print(f'  - {k}') for k in d.get('mcpServers',{})]" 2>/dev/null
+python3 -c "import json; d=json.load(open('/home/tec/.gemini/config/mcp_config.json')); print(f'MCPs configurados: {len(d.get(\"mcpServers\",{}))}'); [print(f'  - {k}') for k in d.get('mcpServers',{})]" 2>/dev/null
 
 # Logs recientes de errores de agentes
 journalctl --user -p err --since "1 hour ago" --no-pager 2>/dev/null | tail -30
@@ -278,19 +278,19 @@ graph TB
         OC["💻 OpenCode CLI"]
         HER["🔮 Hermes CLI"]
         DS["🧠 DeepSeek R1"]
-        MB["📦 Memory Bank<br/>(StorageSync ↔ NODE_VAULT)"]
+        MB["📦 Memory Bank<br/>(Syncthing ↔ CT106)"]
         SCRIPTS["⚙️ SCRIPTS/"]
         SKILLS["🎯 Skills (12+)"]
     end
     
-    subgraph "Proxmox VE ()"
-        NODE_HYBRID["🟢 NODE_HYBRID ubuntu-hybrid<br/>Playwright :3000<br/>FlareSolverr :8191<br/>FFmpeg QSV / Tdarr"]
-        NODE_VAULT["🟢 NODE_VAULT Vault Obsidian<br/>StorageSync :8384"]
+    subgraph "Proxmox VE (192.168.1.220)"
+        CT114["🟢 CT114 ubuntu-hybrid<br/>Playwright :3000<br/>FlareSolverr :8191<br/>FFmpeg QSV / Tdarr"]
+        CT106["🟢 CT106 Vault Obsidian<br/>Syncthing :8384"]
     end
     
     subgraph "Red Local"
-        MK["🛡️ MikroTik ()<br/>RouterOS v7"]
-        HP45["💻 HP45 Réplica ()"]
+        MK["🛡️ MikroTik (192.168.1.1)<br/>RouterOS v7"]
+        HP45["💻 HP45 Réplica (192.168.1.200)"]
     end
     
     subgraph "Cloud / APIs"
@@ -305,8 +305,8 @@ graph TB
     AGY --> SKILLS
     OC --> SKILLS
     HER --> SKILLS
-    MB <-->|StorageSync| NODE_VAULT
-    AGY -->|Playwright WS| NODE_HYBRID
+    MB <-->|Syncthing| CT106
+    AGY -->|Playwright WS| CT114
     AGY -->|Browser| NLM
     SCRIPTS -->|TCP Probes| MK
     SCRIPTS -->|API Calls| GAPI

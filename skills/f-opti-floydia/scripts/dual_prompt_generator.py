@@ -55,7 +55,7 @@ Tu objetivo exclusivo es **analizar la telemetría en vivo del ecosistema FloydI
 Genera tu informe de diagnóstico respondiendo con la siguiente estructura:
 
 1. **Estado General del Ecosistema**: Veredicto de salud (🟢 Sano | 🟡 Degradado | 🔴 Crítico).
-2. **Análisis de Nodos de Red & Proxmox**: Evaluación de latencias TCP (NODE_HYBRID Playwright, NODE_VAULT Vault, MikroTik).
+2. **Análisis de Nodos de Red & Proxmox**: Evaluación de latencias TCP (CT114 Playwright, CT106 Vault, MikroTik).
 3. **Análisis de Recursos Locales**: Evaluación de CPU load, RAM disponible, ZRAM y métricas PSI.
 4. **Top 3 Riesgos o Cuellos de Botella Detectados**: Detallando síntoma, causa raíz probable e impacto.
 5. **Hipótesis Técnicas**: Aspectos que requieren verificación adicional.
@@ -80,8 +80,8 @@ A partir de la telemetría del ecosistema FloydIA y los principios de **Zero-Dow
 </ecosystem_context>
 
 <guardrails>
-- **PROHIBIDO**: Ejecutar `sync` global en carpetas con sincronización (CloudStorage/StorageSync) para evitar I/O stalls.
-- **PROTEGIDO**: No tocar procesos de Antigravity IDE, LSPs (`jedi`, `tsserver`), StorageSync ni demonios de sistema.
+- **PROHIBIDO**: Ejecutar `sync` global en carpetas con sincronización (Dropbox/Syncthing) para evitar I/O stalls.
+- **PROTEGIDO**: No tocar procesos de Antigravity IDE, LSPs (`jedi`, `tsserver`), Syncthing ni demonios de sistema.
 - **TIMEOUTS**: Todo script debe ejecutarse a través de `safe_run_python.sh` con timeout duro y `stdin` desacoplado a `/dev/null`.
 </guardrails>
 

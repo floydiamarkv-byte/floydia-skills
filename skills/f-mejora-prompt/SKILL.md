@@ -93,7 +93,7 @@ Selecciona cómo deseas optimizar tu instrucción respondiendo con el **número*
 ### Opción 1: Modo FULL (Workspace + Obsidian + Lecciones + NLM Rápida)
 1. **Contención**: Encapsula la entrada en `<prompt_candidate>`.
 2. **Detección de Modelo**: Adapta a LRM (*Goal-and-Constraints*, sin CoT forzado) o Estándar (*Few-Shot / CoT*).
-3. **Inyección de Entorno y Lecciones**: Inyecta herramientas activas, lecciones de `lessons-learned.md` (aislamiento NODE_HYBRID Playwright `:3000`, NODE_VAULT StorageSync `:8384`, logos ≤45px, marcador ALT en caché edge).
+3. **Inyección de Entorno y Lecciones**: Inyecta herramientas activas, lecciones de `lessons-learned.md` (aislamiento CT114 Playwright `:3000`, CT106 Syncthing `:8384`, logos ≤45px, marcador ALT en caché edge).
 4. **Micro-Consulta NLM Dirigida**: Ejecuta `python3 SCRIPTS/notebooklm_curator.py "<tema del prompt>"` para identificar el cuaderno más relevante. Si hay match con score ≥ 2, consulta el cuaderno vía browser o MCP para extraer 3-5 técnicas/patrones clave del dominio. Si no hay match, saltar e indicar "sin consulta NLM (fuera de dominio indexado)".
 5. **Prefijo para Context Caching**: Bloque inmutable al inicio (hasta 90% ahorro de tokens en re-ejecución).
 6. **Salida Completa**:

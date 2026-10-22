@@ -1,5 +1,8 @@
 # ⚡ FloydIA Agent Skills Suite
 
+[![CI](https://github.com/floydiamarkv-byte/floydia-skills/actions/workflows/ci.yml/badge.svg)](https://github.com/floydiamarkv-byte/floydia-skills/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 > **Suite Metodológica, Gobernanza SRE y Habilidades Agénticas de Alto Rendimiento para Google Antigravity, OpenCode, Claude Code y Hermes CLI.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)

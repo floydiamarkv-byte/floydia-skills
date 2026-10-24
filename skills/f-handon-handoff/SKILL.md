@@ -1,6 +1,6 @@
 ---
 name: f-handon-handoff
-description: "Protocolo de Continuidad Agéntica y Traspaso de Sesión. Genera informes de cierre inmutables en memory-bank/journal/, persiste la memoria y entrega el prompt de traspaso; y recupera el último handoff para sincronizar el contexto del proyecto y arrancar la sesión de inmediato. USAR cuando el usuario invoque /f-handoff, handoff!!, /f-handon, handon!!, o pida cerrar/reanudar sesiones. NO USAR para modificar código de clientes sin confirmación previa tras el arranque."
+description: "Continuidad agéntica, cierre de sesión y traspaso de memoria. Invocar con /f-handon o /f-handoff."
 version: 2.0.0
 triggers:
   - /f-handoff

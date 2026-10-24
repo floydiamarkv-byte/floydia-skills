@@ -17,15 +17,14 @@ La suite **FloydIA Agent Skills** reúne los protocolos y herramientas agéntica
 
 | Skill | Comando / Trigger | Descripción |
 | :--- | :--- | :--- |
-| **`f-harness-workflow`** | `/f-harness` | **Ingeniería de Arneses**: Flujo de trabajo estructurado con 4 roles desacoplados (*Líder, Explorador, Implementador, Revisor*) y principio de *Evidencia antes de Afirmar*. |
-| **`f-mejora-prompt`** | `/f-mejora`, `/mejora` | **Optimizador Avanzado de Prompts**: Arquitectura *Menu-First*, taxonomía CAT_01..08, calibración LRM y compilación quirúrgica. |
-| **`f-audit-web`** | `/f-audit-web`, `/audit-web` | **Auditoría Externa por Portapapeles**: Permite actuar como ojos y manos locales para diagnósticos de IAs web potentes mediante texto plano. |
-| **`f-opti-notebooklm`** | `/f-opti-notebooklm` | **Curador y Enriquecedor de NotebookLM**: Síntesis temática, extracción estructurada e inyección de base de verdad (*Ground Truth*). |
-| **`f-opti-floydia`** | `/f-opti`, `/opti` | **SRE Governor**: Detección de cuellos de botella de latencia, diagnóstico de nodos, resiliencia y telemetría de agentes. |
-| **`f-update-floydia`** | `/f-update`, `/update` | **Mantenimiento Determinista**: Suite de actualización segura en Linux/Arch (pacman, AUR, flatpak) con chequeos de integridad. |
+| **`f-harness`** | `/f-harness`, `/harness` | **Centro de Control Unificado del Harness (v4.3)**: Routing de 11 motores, gestión de presupuesto atómico WAL, gobernanza OpenCode Go ($10/mo) y selector de modos. |
+| **`f-evidence-engine`** | `/f-evidence` | **Motor de Evidencia Determinista**: Certificación criptográfica SHA256, validación Playwright multi-contexto y verificación antes de afirmar. |
+| **`f-orquestador-floydia`** | `/f-orquestador` | **Orquestador Multi-Agente & Arquitectura**: Asume rol de Arquitecto Director, delegación algorítmica y diseño de software. |
+| **`f-mejora-prompt`** | `/f-mejora`, `/mejora` | **Optimizador Avanzado de Prompts v5.1**: Arquitectura Menu-First interactiva de 8 modos, calibración LRM y compilación quirúrgica. |
+| **`web-quality-audit`** | `/web-quality-audit` | **Auditoría Integral de Calidad Web**: Evaluación determinista Core Web Vitals (LCP/CLS), accesibilidad WCAG AAA y SEO técnico. |
 | **`f-handon-handoff`** | `/f-handoff`, `/f-handon` | **Continuidad Agéntica**: Persistencia de contexto en journals inmutables y traspaso de sesión sin pérdida de estado. |
-| **`f-client-router`** | `/f-clientes`, `/clientes` | **Router de Contexto de Clientes**: Enrutamiento canónico de proyectos, briefs y accesos con aislamiento de dominios. |
-| **`f-env-descriptor`** | `/f-descripcion`, `/entorno` | **Handoff Exhaustivo de Entorno**: Generador de reportes de introspección técnica de hardware, red, agentes y SO. |
+| **`f-master-update`** | `/f-master-update` | **Super Suite SRE**: Mantenimiento determinista del sistema operativo, memoria, agentes y sincronización NotebookLM. |
+| **`f-investiga`** | `/f-investiga` | **Investigación Profunda**: Modos Indagación (NotebookLM y vault) y Enjambre (consenso multi-modelo en paralelo). |
 
 ---
 

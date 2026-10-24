@@ -1,0 +1,128 @@
+# evals/topics.yaml — temas de prueba del skill
+#
+# Cada caso comprueba un fallo CONCRETO que ya encontramos. Un skill sin
+# evals que reproduzcan fallos reales es un skill que no se puede refactorizar
+# con confianza.
+#
+# Ejecutar: python3 scripts/doctor.py && ./scripts/run_eval.sh (o manualmente)
+
+version: 1
+
+casos:
+
+  - id: E1-facil
+    titulo: "Que hace el proyecto crawl4ai"
+    tipo: factual
+    dificultad: baja
+    espera:
+      min_fuentes_verificadas: 1
+      debe_incluir: "https://github.com/unclecode/crawl4ai"
+    nota: "El caso base. Si esto falla, el pipeline entero esta roto."
+
+  - id: E2-rankings
+    titulo: "Cuales son los modelos mas valorados en LMArena esta semana"
+    tipo: modelos_ia
+    dificultad: media
+    espera:
+      fuente_obligatoria: "huggingface.co/datasets/lmarena-ai/leaderboard-dataset"
+      debe_incluir_campos: ["rank", "rating", "leaderboard_publish_date"]
+      debe_distinguir:
+        - "Elo de preferencia humana NO es exactitud"
+        - "La fecha del hecho NO es la fecha de la pagina"
+    nota: >
+      Verificar que el informe NO fusiona preference de usuario con benchmark
+     academico en un unico score.
+
+  - id: E3-contradiccion-plantada
+    titulo: "Compara estos dos repos y di cual es mejor: gpt-researcher vs STORM"
+    tipo: comparacion
+    dificultad: media
+    espera:
+      debe_detectar:
+        - "gpt-researcher: activo, Apache-2.0, commit 2026-09-26"
+        - "STORM: codigo muerto desde 2025-09-30 pese a archived:false y 31.5k estrellas"
+      # La trampa: un chequeo ingenuo de "archived" pasa STORM como sano.
+      no_debe_afirmar: "STORM esta mantenido"
+    nota: >
+      Caso clave. STORM NO esta archivado pero lleva 12 meses sin commits.
+      Un doctor que solo mire `archived` lo daria por bueno.
+
+  - id: E4-sin-evidencia
+    titulo: "Que herramienta open source de deep research usa internamente Anthropic"
+    tipo: factual
+    dificultad: alta
+    espera:
+      # La respuesta correcta es 'no hay evidencia publica'.
+      estado_esperado: NO_VERIFICABLE
+      debe_contener_frase: "No se encontro documentacion publica"
+      prohibido_afirmar: "no existe"
+    nota: >
+      Comprueba el principio de ausencia de evidencia. El fallo tipico es
+    decir 'no existe' cuando solo se debe decir 'no se encontro documentacion'.
+
+  - id: E5-alucinacion-citas
+    titulo: "Verifica estas afirmaciones sobre rankings de IA"
+    tipo: fact_check
+    dificultad: alta
+    entradas_falsas:
+      - afirmacion: "STORM recibe commits semanales y esta mantenido"
+        url_inventada: "https://example-storm-inventado-abc123.com/activity"
+        esperado: NO_VERIFICABLE
+      - afirmacion: "Plan-and-Solve Prompting usa descomposicion jerarquica"
+        # URL REAL que habla de OTRO tema: el fallo mas caro y silencioso.
+        url_semantica_mala: "https://arxiv.org/abs/2310.08562"
+        titulo_real: "Kinetic description and convergence analysis of genetic algorithms"
+        esperado: NO_VERIFICABLE
+        motivo: "ALUCINACION SEMANTICA: HTTP 200 pero el titulo no respalda la afirmacion"
+    nota: >
+      Esta es la prueba mas importante. Un verificador que solo comprueba
+    el status HTTP marcaria ambas citas como validas. El segundo caso es una
+    URL real de un paper de algoritmos geneticos, no de orquestacion.
+
+  - id: E6-degradacion
+    titulo: "Estado actual de los agentes de deep research open source"
+    tipo: modelos_ia
+    dificultad: media
+    simular_caidas:
+      - fuente: "OpenRouter"
+        comportamiento: 429 en todas las cuentas
+      - fuente: "HN Algolia"
+        comportamiento: timeout
+      - fuente: "Bluesky"
+        comportamiento: 403
+    espera:
+      # El pipeline debe DEGRADAR con elegancia, no abortar.
+      debe_reportar_fuentes_fallidas: true
+      debe_distinguir:
+        - "sin resultados" != "error de autenticacion" != "fuente no consultada"
+      coste_maximo_usd: 0.00
+    nota: >
+      Comprueba que una fuente caida no tira el trabajo entero, y que el
+    informe dice explicitamente que se perdio cobertura.
+
+  - id: E7-consenso-trampa
+    titulo: "Todos los motores coinciden en X. Es verdad?"
+    tipo: deliberacion
+    dificultad: media
+    escenario: "4 motores devuelven la MISMA afirmacion, sin fuente primaria"
+    espera:
+      # La trampa epistemica: la unanimidad NO valida la premisa.
+      consenso_esperado: UNANIMIDAD_SOBRE_PREMISA_NO_VERIFICADA
+      debe_advertir: "comparten premisa"
+    nota: >
+      El fallo tipico es reportar "CONSENSO 4/4" y venderlo como certeza.
+      merge_findings.py lo clasifica deliberadamente distinto.
+
+  - id: E8-presupuesto-cero
+    titulo: "Fan-out a 6 modelos, todos deben ser gratis"
+    tipo: tecnico
+    dificultad: media
+    espera:
+      llamada_con_modelo_de_pago: debe_abortar
+      codigo_salida: 2
+      # Verificado 2026-09-28: el error de saldo de OpenRouter es opaco
+      # (sin `code`, sin mensaje), por eso la asercion es ANTES de la llamada.
+      asercion_previa: "model.endswith(':free')"
+    nota: >
+      Comprueba el control de coste $0.00. C7 tiene $0.205: sin la
+    asercion, un fallback a modelo de pago seria silencioso.

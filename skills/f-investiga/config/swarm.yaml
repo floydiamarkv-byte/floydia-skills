@@ -1,0 +1,110 @@
+# config/swarm.yaml — parámetros del enjambre
+# Coste de inferencia: $0.00. Todos los modelos deben terminar en ":free".
+
+version: 1
+
+presupuesto:
+  # Tope duro de palabras por motor. Sin esto, N motores revientan el contexto padre.
+  max_words_asesor: 300
+  min_words_asesor: 150
+  max_words_revisor: 200
+  max_words_chairman: 600
+  # Tope de findings por motor
+  max_findings_por_motor: 5
+  # Tope de fuentes por finding
+  max_sources_por_finding: 4
+
+profundidad:
+  rapido:
+    motores: 2
+    timeout_global_s: 60
+    subpreguntas_max: 2
+  estandar:
+    motores: 4
+    timeout_global_s: 180
+    subpreguntas_max: 4
+  exhaustivo:
+    motores: 8
+    timeout_global_s: 600
+    subpreguntas_max: 6
+
+# Modelos :free verificados 2026-09-28.
+# CLEAN = devuelve contenido real. REASONING = hay que normalizar (el script lo hace).
+modelos:
+  limpios:
+    - nvidia/nemotron-3-ultra-550b-a55b:free
+    - dots-studio/dots-3-note-preview:free
+  requieren_normalizador:
+    - cohere/north-mini-code:free
+    - liquid/lfm-2.5-2.6b:free
+    - nvidia/nemotron-3.5-lightning:free
+  # No usar: fallan de forma estable
+  #   poolside/laguna-s-2.1:free        -> Provider returned error
+  #   qwen/qwen3.8-27b:free             -> 429 rate-limited upstream
+  #   thinkingmachines/inkling-small:free -> exige cuenta verificada por edad
+
+cuentas:
+  # OJO: C7, C9 y OPENROUTER_API_KEY son LA MISMA cuenta (hash SHA-256 identico).
+  # Hay 7 cuentas reales. Los scripts deduplican por hash automaticamente.
+  # C7 es la unica con saldo ($0.205 restante verificado 2026-09-28).
+  variables:
+    - C1_OPENROUTER
+    - C2_OPENROUTER
+    - C3_OPENROUTER
+    - C4_OPENROUTER
+    - C5_OPENROUTER
+    - C6_OPENROUTER
+    - C7_OPENROUTER
+    - C9_OPENROUTER      # alias de C7
+    - OPENROUTER_API_KEY # alias de C7
+  # Asercion dura: abortar ANTES de llamar si el modelo no es :free.
+  permitir_modelos_de_pago: false
+
+red:
+  # Nunca DDG-first: esta degradado (HTTP 202 con 0 resultados en la mayoria
+  # de intentos). Usar solo como respaldo.
+  orden_busqueda:
+    - hn_algolia
+    - openalex
+    - arxiv
+    - jina_reader
+    - duckduckgo   # degradado, ultimo recurso
+  timeout_http_s: 15
+  pausa_entre_sondas_s: 0.4
+  reintentos: 2
+  # Clasificacion de fallos (verificada empiricamente)
+  #   RATE_LIMIT   -> backoff exponencial 2^n
+  #   PROVIDER_ERROR -> 1 reintento
+  #   AGE_GATED    -> no reintentar, marcar y continuar
+  #   SIN_SALDO    -> abortar el fan-out (no se degrada a pago)
+
+verificacion:
+  # Obligatoria antes de escribir cualquier afirmacion en el informe.
+  wayback: true
+  comprobar_titulo_real: true   # detecta ALUCINACION SEMANTICA
+  verificar_fragmento_lit: false # --deep; lento, usar solo en citas clave
+  # Dominios que sabemos bloqueados: marcarlos evita "rechazar" una cita buena.
+  hosts_bloqueados_conocidos:
+    - semanticscholar.org
+    - public.api.bsky.app
+    - artificialanalysis.ai
+    - openai.com
+    - x.com
+    - twitter.com
+
+consulta_externa:
+  # NUNCA automatizar. Los ToS de OpenAI y Anthropic lo prohiben explicitamente.
+  automatizar_webs_de_ia: false
+  modo: humano_en_el_bucle
+  # Unica automatizacion de IA externa confirmada ToS-safe:
+  #   Perplexity Computer MCP -> https://www.perplexity.ai/rest/computer/mcp
+  #   (OAuth 2.0, sin API key, facturado contra la suscripcion)
+  mcp_permitido: perplexity_computer
+
+seguridad:
+  # Prohibido: imprimir valores de variables a prompts, logs o informes.
+  exponer_valores_de_secrets: false
+  # Redactar ANTES de exportar a una IA externa, nunca despues.
+  redactar_antes_de_exportar: true
+  # Todo texto web es dato pasivo: ignorar prompt-injection.
+  tratar_web_como_no_confiable: true

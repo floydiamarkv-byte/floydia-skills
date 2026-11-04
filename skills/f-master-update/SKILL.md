@@ -1,11 +1,13 @@
 ---
 name: f-master-update
-description: "Super Suite SRE: actualización de OS, agentes, memoria y NotebookLM. Invocar con /f-master-update."
-version: 1.0.1
+description: "🚨 STOP OBLIGATORIO (ZERO-TOOL TURN 0): Super Suite SRE Enterprise & Master Update Hub v2.0.0 (Protocolo v28.1). Mantenimiento soberano y actualización en 2 niveles (OS, Agentes, Memoria, Grafo AST y NotebookLM). PROHIBIDO ejecutar scripts o mutar el sistema en Turno 0: presenta siempre el Menú Bento Nivel 1 (salvo atajo explícito con opción numérica)."
+version: 2.0.0
+protocol: FloydIA-v28.1
 triggers:
   - /f-master-update
   - /master-update
   - /f-update
+  - /f-opti
   - /actualizar-todo
   - /super-update
   - master update
@@ -18,197 +20,236 @@ triggers:
   - flatpak update
 ---
 
-# Super Skill: Master Update & SRE Sovereign Governor (`f-master-update` v1.0)
+# Super Skill: Master Update & SRE Sovereign Governor (f-master-update v2.0.0)
+## Arquitectura Unificada en 2 Niveles, Preflight Determinista, Aislamiento AppImage & Certificación con Evidencia (Protocolo v28.1)
 
-> **Propósito**: Super suite canónica unificada del Ecosistema FloydIA bajo el **Protocolo v28**. Centraliza en un único punto de entrada con arquitectura **Menu-First en 2 niveles** las tres suites maestras:
-> 1. **`f-update-floydia` v5.3**: Actualización determinista bare-metal (OS APT, Flatpaks, firmware, NPM agents, Memory Bank, catálogo semántico de imágenes, Graphify AST, CODEX_FLOYDIA y smoke tests).
-> 2. **`f-opti-floydia` v4.1**: SRE Governor, sonda de telemetría, saneamiento de temporales, rescate anti-hang seguro, análisis de cuellos de botella y resiliencia de backups.
-> 3. **`f-opti-notebooklm` v1.1**: Curación soberana, auditoría y enrutamiento de los 34 cuadernos de la base de verdad Google NotebookLM (SSOT: SCRIPTS/notebooklm_curator.py --list).
+> 🚨 **COMPUERTA DE INTERCEPCIÓN DURA — REGLA ZERO-TOOL TURN 0 (INQUEBRANTABLE)**:
+> Al invocarse esta skill mediante cualquiera de sus triggers (`/f-master-update`, `/f-update`, `/f-opti`, `actualizar repos`, `flatpak update`, etc.):
+> 1. **PROHIBIDA LA EJECUCIÓN DIRECTA O MUTACIÓN DE SISTEMA EN TURNO 0**:
+>    - Queda estrictamente prohibido lanzar scripts bash, comandos APT, Flatpak, git pull o purgas en el primer turno de conversación sin autorización explícita.
+> 2. **EMISIÓN OBLIGATORIA DEL MENÚ BENTO NIVEL 1**:
+>    - Si el usuario no envía un atajo numérico explícito (`/f-master-update [1-6]`), el agente DEBE emitir de inmediato el Menú Bento Nivel 1 y detener su turno a la espera de la elección del operador.
 
 ---
 
-## 🧭 1. Arquitectura Unificada & Flujo de Ejecución
+## 🧭 1. MAQUINA DE ESTADOS Y COMPUERTA ZERO-TOOL TURN 0
 
 ```mermaid
-graph TD
-    Trigger["Invocación (/f-master-update, /master-update, /f-update, /f-opti)"] --> M1["Menú Nivel 1 (Master Hub)"]
+stateDiagram-v2
+    [*] --> T0_Master: Invocación (/f-master-update, /f-update, /f-opti)
+    
+    T0_Master --> Parse_Args: Parseo de Flags (--full, --dry-run, --system)
+    Parse_Args --> Render_Master_Hub: Sin argumentos -> Bento Hub Nivel 1 (Zero-Tool)
+    Parse_Args --> Preflight_Execution: Con argumentos válidos y confirmación
 
-    M1 -->|Opción 1| Sweep["🚀 Full Sovereign Sweep (Fases A ➔ B ➔ C ➔ D)"]
-    M1 -->|Opción 2| Daily["⚡ Optimización Rápida & Mantenimiento Diario"]
-    M1 -->|Opción 3| SubUpd["🛰️ Submenú Especializado: Actualización (7 Fases)"]
-    M1 -->|Opción 4| SubOpt["🔍 Submenú Especializado: Optimización & SRE (11 Opciones)"]
-    M1 -->|Opción 5| SubNLM["🧠 Submenú Especializado: NotebookLM (34 Cuadernos / 5 Variantes)"]
-    M1 -->|Opción 0| Exit["🚪 Salir"]
+    Render_Master_Hub --> Wait_Hub_Choice: Espera Selección del Operador
+    Wait_Hub_Choice --> Preflight_Execution: Selección 1, 2, 6
+    Wait_Hub_Choice --> Render_Submenu_3: Selección 3 (Actualización Bare-Metal)
+    Wait_Hub_Choice --> Render_Submenu_4: Selección 4 (SRE Governor & Diagnóstico)
+    Wait_Hub_Choice --> Delegate_Submenu_5: Selección 5 (Delegación f-opti-notebooklm)
+    Wait_Hub_Choice --> Exit_Graceful: Selección 0 (Salir)
 
-    subgraph "🚀 Pipeline Full Sovereign Sweep"
-        Sweep --> FA["Fase A: SRE & Quick Wins (Telemetría + Saneamiento)"]
-        FA --> FB["Fase B: Actualización Core (OS + Agentes + Memoria + Imágenes + Grafo + Codex)"]
-        FB --> FC["Fase C: Ground Truth (Auditoría Salud NotebookLM)"]
-        FC --> FD["Fase D: Paridad Multi-Agente (Symlinks OpenCode / DSH)"]
-    end
+    state Preflight_Execution {
+        [*] --> SRE_Preflight: Lock dpkg, Ping CT106/CT114, Espacio /tmp
+        SRE_Preflight --> Abort_Preflight: ❌ Fallo Crítico (Lock ocupado o sin red)
+        SRE_Preflight --> Run_Pipeline: 🟢 Preflight Aprobado
+    }
+
+    state Run_Pipeline {
+        [*] --> Phase_A: Fase A (Telemetría SRE & Quick Wins)
+        Phase_A --> Phase_B: Fase B (Core Update: OS + Memoria + AST)
+        Phase_B --> Phase_C: Fase C (Ground Truth NotebookLM Health)
+        Phase_C --> Phase_D: Fase D (Paridad Multi-Agente & Git Status)
+    }
+
+    Run_Pipeline --> Emit_Evidence: Genera SHA256 + Log en sesión
+    Emit_Evidence --> [*]
+    Abort_Preflight --> [*]
 ```
 
 ---
 
-## 🎯 2. Menú Interactivo Nivel 1 — Master Hub
+## 🛡️ 2. TIERS DE RIESGO Y POLÍTICA DE CONSENTIMIENTO
 
-Al invocar `/f-master-update`, `/master-update`, `/f-update`, `/f-opti`, `/actualizar-todo` o `/super-update`, el agente **DEBE responder de inmediato presentando este menú Bento interactivo**:
+Toda operación del sistema se clasifica en tres niveles estrictos de blast-radius:
+* **`[RO]` (Read-Only)**: Diagnósticos pasivos, consultas y status. Ejecución sin confirmación adicional.
+* **`[RW]` (Safe-Mutation)**: Limpieza de temporales, compactación de memoria bajo lock, compilación de grafo AST y sincronización Git fast-forward. Modo `--dry-run` por defecto; ejecución real bajo confirmación de menú.
+* **`[IRR]` (Irreversible / Alto Riesgo)**: Modificación de paquetes de sistema (`apt upgrade`, purga de Flatpaks). Exige bandera explícita `--yes` y confirmación humana previa.
+
+---
+
+## 🎯 3. MENÚ BENTO NIVEL 1 — MASTER HUB
+
+Al invocar `/f-master-update` o sus triggers sin flags directos, el agente emite inmediatamente este menú:
 
 ```markdown
-╔════════════════════════════════════════════════════════════════════════════════╗
-║             ⚡ F-MASTER-UPDATE — MASTER SRE & UPDATE HUB v1.0.0               ║
-║                     Ecosistema FloydIA — Protocolo v28                         ║
-╚════════════════════════════════════════════════════════════════════════════════╝
+╔═════════════════════════════════════════════════════════════════════════════════════════════════╗
+║             ⚡ F-MASTER-UPDATE — MASTER SRE & SOVEREIGN UPDATE HUB v2.0.0 Enterprise             ║
+║                     Ecosistema FloydIA — Protocolo v28.1 (HP15 / Mesh LXC)                      ║
+╚═════════════════════════════════════════════════════════════════════════════════════════════════╝
 
-Selecciona una acción respondiendo con el número correspondiente:
+Selecciona una acción operativa respondiendo con el NÚMERO correspondiente:
 
-1️⃣ 🚀 **Suite Completa Soberana (Full Sovereign Sweep)**
-   ↳ Pipeline de 4 Fases Integradas:
-     • Fase A: Telemetría SRE + Quick Wins seguras (purga zombies, temporales).
-     • Fase B: Actualización OS (APT/Flatpak/NPM), Memory Bank, Catálogo Visual de Imágenes,
-       Graphify AST y regeneración de CODEX_FLOYDIA.md.
-     • Fase C: Auditoría de integridad de NotebookLM y sincronización automática del cuaderno de configuración (ENTORNO_HARNESS_MIKROTIK_Y_OBSIDIAN_SSOT).
-     • Fase D: Sincronización multi-agente (`sync_skills_multiagent.sh --fix`).
+1️⃣ 🚀 **Suite Completa Soberana (Full Sovereign Sweep)** [Riesgo: RW/IRR | ETA: ~4-6 min | Fases: A | B | C | D]
+   ↳ Pipeline integral de 4 Fases:
+     • Fase A: Telemetría SRE, purga de procesos huérfanos y saneamiento de temporales.
+     • Fase B: Actualización de sistema OS (APT/Flatpak), Memory Bank, Catálogo de Imágenes,
+       reconstrucción del Grafo AST (`graphify update .`) y `CODEX_FLOYDIA.md`.
+     • Fase C: Auditoría de integridad de cuadernos NotebookLM (`notebooklm_curator.py --health`).
+     • Fase D: Sincronización multi-agente (`sync_skills_multiagent.sh --fix`) y auditoría Git.
 
-2️⃣ ⚡ **Optimización Rápida & Mantenimiento Diario (Quick Wins)**
-   ↳ Saneamiento seguro de temporales (`antigravity_speed_boost.sh`), purga de procesos
-     huérfanos, compactación de memoria (`memory_compactor.py`) y comprobación rápida
-     de paquetes actualizables sin reinicio.
+2️⃣ ⚡ **Optimización Rápida & Mantenimiento Diario (Quick Wins)** [Riesgo: RW | ETA: ~45 s | Fases: A]
+   ↳ Saneamiento seguro de temporales (`antigravity_speed_boost.sh --apply --clean-tmp`),
+      purga de procesos parásitos, compactación rápida de memoria y verificación de paquetes
+      actualizables sin reinicio.
 
-3️⃣ 🛰️ **Submenú Especializado de Actualización (f-update-floydia v5.3)**
-   ↳ Despliega las 7 fases granulares de actualización de sistema, imágenes y manifiestos.
+3️⃣ 🛰️ **Submenú Especializado: Actualización Bare-Metal & Sistema** [Nivel 2 | Fases: B]
+   ↳ Despliega las opciones granulares de actualización de sistema, catálogo de imágenes,
+      reconstrucción de grafo AST y smoke tests (`update_floydia.py`).
 
-4️⃣ 🔍 **Submenú Especializado de Optimización & SRE (f-opti-floydia v4.1)**
-   ↳ Despliega las 11 opciones de auditoría hardware/red, prompts duales y rescate anti-hang.
+4️⃣ 🔍 **Submenú Especializado: Optimización & SRE Governor** [Nivel 2 | Fases: A]
+   ↳ Despliega herramientas de diagnóstico de hardware/red, análisis de cuellos de botella PSI,
+      rescate anti-hang seguro y verificación de salud MCP.
 
-5️⃣ 🧠 **Submenú Especializado de NotebookLM (f-opti-notebooklm v1.1)**
-   ↳ Despliega el selector de los 34 cuadernos activos y las 5 variantes de curación.
+5️⃣ 🧠 **Submenú Especializado: Base de Verdad NotebookLM** [Nivel 2 | Fases: C]
+   ↳ Delegación directa al motor soberano `f-opti-notebooklm` y consulta de los cuadernos SSOT.
 
-6️⃣ 🐙 **Auditoría & Sincronización Git/GitHub de Proyectos Activos**
-   ↳ Inspecciona el estado de los repositorios activos (FloydIA Suite, Floydia Skills,
-     Stitch2Elementor, prompt-optimizer, etc.), detecta divergencias/dirty y sincroniza
-     ramas remotas sin colisiones vía `SCRIPTS/sync_git_repos.sh`.
+6️⃣ 🐙 **Auditoría & Sincronización Git de Repositorios Activos** [Riesgo: RW | ETA: ~30 s | Fases: D]
+   ↳ Inspección de estado (`sync_git_repos.sh --status`) y sincronización remota no destructiva
+      (`--ff-only`) de los repositorios del ecosistema.
 
-0️⃣ 🚪 **Salir**
+0️⃣ 🚪 **Salir del Hub**
 ```
 
 ---
 
-## 📂 3. Submenús Especializados (Nivel 2)
+## 📂 4. SUBMENÚS ESPECIALIZADOS (NIVEL 2)
 
-### 🛰️ Submenú 3: Actualización & Disaster Recovery (`f-update-floydia`)
+### 🛰️ Submenú 3: Actualización Bare-Metal & Sistema (`update_floydia.py`)
+
 ```markdown
-╔═══════════════════════════════════════════════════════════════╗
-║         🛰️ SUBMENÚ: ACTUALIZACIÓN & DISASTER RECOVERY         ║
-╚═══════════════════════════════════════════════════════════════╝
+╔═════════════════════════════════════════════════════════════════════════════════════════════════╗
+║                   🛰️ SUBMENÚ 3: ACTUALIZACIÓN BARE-METAL & SISTEMA                              ║
+╚═════════════════════════════════════════════════════════════════════════════════════════════════╝
 
-1️⃣ **Actualización Completa (Full Pipeline Fases 0 a 7)**
-   ↳ Preflight, OS/APT/Flatpak/NPM, Memoria, Catálogo Imágenes, Grafo AST, CODEX, Smoke Tests y Sync.
-2️⃣ **Catálogo Visual & Metadatos Semánticos de Imágenes** 📸
-   ↳ Ejecuta `index_workspace_images.py` en paralelo (dimensiones, DPI, ratios, ALT text y JSON).
-3️⃣ **Compactación del Memory Bank & Auditoría Syncthing**
-   ↳ Lock exclusivo `memory_compactor.py`, verificación de budget (≤400 tokens) y escaneo `.sync-conflict`.
-4️⃣ **Auditoría de Sistema, Paquetes & Agentes IA (MX Linux / APT / Flatpak / DSH / OpenCode)**
-   ↳ Detección con `apt list --upgradable`, paquetes globales NPM y firmware sin cambios destructivos.
-5️⃣ **Reconstrucción del Grafo AST (Graphify) & Manifiesto CODEX**
-   ↳ `graphify update .` y regeneración determinista de `CODEX_FLOYDIA.md`.
-6️⃣ **Smoke Tests & Certificación Rápida**
-   ↳ `dpkg --configure -a`, `dsh --dump-config`, latencia Graphify <10ms y consistencia.
-7️⃣ **Sincronización Multi-Agente (OpenCode Desktop, DeepSeek Harness)**
-   ↳ `sync_skills_multiagent.sh --fix` asegurando paridad del 100% en la trinidad agéntica.
-8️⃣ **Auditoría & Status Git de Repositorios Activos** 🐙
-   ↳ `SCRIPTS/sync_git_repos.sh --status` (o `--fetch` / `--sync`) auditando ramas y cambios locales.
+1️⃣ **Actualización Completa (Full Pipeline Fases 0 a 6)** [IRR]
+   ↳ Preflight, OS (APT/Flatpak/NPM), Antigravity Suite, Memoria, Catálogo Imágenes, Grafo AST y Smoke Tests.
+      `python3 SCRIPTS/update_floydia.py --full --dry-run` (añadir `--yes` para aplicar).
+2️⃣ **Catálogo Visual & Metadatos Semánticos de Imágenes** [RW] 📸
+   ↳ Ejecuta `python3 SCRIPTS/update_floydia.py --images` (dimensiones, DPI, ratios, ALT text y JSON).
+3️⃣ **Compactación del Memory Bank & Auditoría Syncthing** [RW]
+   ↳ Ejecuta `python3 SCRIPTS/memory_compactor.py` bajo lock exclusivo, verificando budget.
+4️⃣ **Auditoría de Sistema y Paquetes Upgradables (Modo Dry-Run)** [RO]
+   ↳ Inspecciona actualizaciones APT/Flatpak sin aplicar cambios: `python3 SCRIPTS/update_floydia.py --system --dry-run`.
+5️⃣ **Reconstrucción del Grafo AST (Graphify) & Manifiesto CODEX** [RW]
+   ↳ Regenera AST determinista y CODEX: `python3 SCRIPTS/update_floydia.py --graph --codex`.
+6️⃣ **Smoke Tests & Certificación Rápida del Sistema** [RO]
+   ↳ Comprobación de integridad, `dpkg --audit` y latencia Graphify: `python3 SCRIPTS/update_floydia.py --verify`.
+7️⃣ **Sincronización Multi-Agente (Trinidad Canónica)** [RW]
+   ↳ Asegura paridad en OpenCode y DeepSeek Harness: `bash SCRIPTS/sync_skills_multiagent.sh --fix`.
 0️⃣ **Volver al Menú Principal**
 ```
 
 ### 🔍 Submenú 4: Optimización & SRE Governor (`f-opti-floydia`)
-```markdown
-╔═══════════════════════════════════════════════════════════════╗
-║         🔍 SUBMENÚ: OPTIMIZACIÓN & SRE GOVERNOR               ║
-╚═══════════════════════════════════════════════════════════════╝
 
-1️⃣ **Diagnóstico Completo del Ecosistema** (`ecosystem_probe.py`: CPU, RAM, ZRAM, CT114, CT106, MikroTik).
-2️⃣ **Generar Prompts Duales para IA Web** (Prompt A Telemetría Sanitizada + Prompt B Plan de Acción SRE).
-3️⃣ **Optimización Rápida (Quick Wins Seguras)** (Saneamiento de temporales y procesos huérfanos).
-4️⃣ **Consultar Ground Truth** (`graphify_query.sh` por lotes + NotebookLM + Obsidian).
-5️⃣ **Auditoría de Red, MikroTik & APIs de IA** (Latencias TCP CT114 :3000, CT106 :8384, DNS AI).
-6️⃣ **Rescate de Emergencia Anti-Hang (< 1s)** (`kill_hung_agents.sh` con lista blanca estricta).
-7️⃣ **Diagnóstico de Cuellos de Botella & Errores** (`bottleneck_analyzer.py`: dmesg, I/O wait, throttling, PSI).
-8️⃣ **Auditoría de Agentes & Harness Engineering** (`agent_health_check.py`: paridad symlinks, MCPs, logs). Incluye `SCRIPTS/healthcheck_mcps.py` (semáforo MCP 4 entornos DSH/Antigravity/OpenCode/Hermes + toolchain web; evidencia JSON en `.session/`, exit≠0 si hay ❌).
-9️⃣ **Mapa Mental / Infograma del Ecosistema** (Mermaid completo y prompt infograma premium).
-🔟 **Escaneo de Prompts Históricos & Enriquecimiento** (Inventario `memory-bank/prompts/` CAT_01..08).
-1️⃣1️⃣ **Resiliencia & Continuidad SRE** (Verificar manifest SHA256, log OK, crons y `guard_command.py`).
+```markdown
+╔═════════════════════════════════════════════════════════════════════════════════════════════════╗
+║                     🔍 SUBMENÚ 4: OPTIMIZACIÓN & SRE GOVERNOR                                   ║
+╚═════════════════════════════════════════════════════════════════════════════════════════════════╝
+
+1️⃣ **Diagnóstico Global del Ecosistema** [RO] (`ecosystem_probe.py`: CPU, RAM, ZRAM, PSI, CT114, CT106, MikroTik).
+2️⃣ **Saneamiento Rápido de Temporales & Procesos Parásitos** [RW] (`antigravity_speed_boost.sh --apply --clean-tmp`).
+3️⃣ **Rescate de Emergencia Anti-Hang (< 1s)** [RW] (`kill_hung_agents.sh` respetando lista blanca).
+4️⃣ **Diagnóstico de Cuellos de Botella & Errores I/O** [RO] (`bottleneck_analyzer.py`: dmesg, PSI, throttling).
+5️⃣ **Auditoría de Agentes & Semáforo MCP** [RO] (`healthcheck_mcps.py`: valida DSH, Antigravity, OpenCode).
+6️⃣ **Auditoría de Conectividad Mesh & Latencias TCP** [RO] (CT114 :3000, CT106 :8384, DNS IA).
 0️⃣ **Volver al Menú Principal**
 ```
 
-### 🧠 Submenú 5: Base de Verdad NotebookLM (`f-opti-notebooklm`)
+### 🧠 Submenú 5: Base de Verdad NotebookLM
 
-> **DELEGACIÓN, NO COPIA.** El menú, el catálogo de cuadernos y las variantes de
-> curación viven **exclusivamente** en el skill `f-opti-notebooklm`. Este hub
-> **no los replica**, por diseño: antes lo hacía y las cifras divergieron
-> (decía 11 cuadernos cuando el SSOT devuelve 34).
->
-> **SSOT del recuento**: `python3 SCRIPTS/notebooklm_curator.py --list`
-> **No escribas un número de cuadernos aquí.** Léelo del script o delega.
-
-Al elegir esta opción, el agente **DEBE** invocar el skill `f-opti-notebooklm`
-y dejar que su menú sea el que se presente. Si el usuario pide la variante 4
-(auditoría de salud) sin pasar por el menú, ejecutar directamente:
-
-```bash
-python3 SCRIPTS/notebooklm_curator.py --health
-```
+> **DELEGACIÓN SOBERANA**: La visualización de cuadernos y curación temática vive exclusivamente en `f-opti-notebooklm`.
+> Al seleccionar esta opción, el agente invoca el skill `f-opti-notebooklm`. Para auditorías directas de salud documental, invocar:
+> `python3 SCRIPTS/notebooklm_curator.py --health`
 
 ---
 
-## 🛠️ 4. Matriz de Comandos CLI y Scripts Operativos
+## 🔍 5. PREFLIGHT Y VERIFICACIÓN PREVIA
 
-| Suite / Fase | Script / Comando SSOT | Modo de Ejecución |
-|---|---|:---:|
-| **SRE Telemetría** | `python3 FLOYDIA/PUBLIC_REPOS/floydia-skills/skills/f-opti-floydia/scripts/ecosystem_probe.py` | Read-Only |
-| **Quick Wins** | `./SCRIPTS/antigravity_speed_boost.sh --apply --clean-tmp --kill-duplicates` | Saneamiento |
-| **Rescate Anti-Hang** | `./SCRIPTS/kill_hung_agents.sh` | Emergencia (<1s) |
-| **Cuellos de Botella** | `python3 FLOYDIA/PUBLIC_REPOS/floydia-skills/skills/f-opti-floydia/scripts/bottleneck_analyzer.py` | Read-Only |
-| **Auditoría Agentes** | `python3 FLOYDIA/PUBLIC_REPOS/floydia-skills/skills/f-opti-floydia/scripts/agent_health_check.py` | Auditoría |
-| **Actualización OS/APT** | `python3 SCRIPTS/update_floydia.py --system --dry-run` (`--yes` para aplicar) | Sistema |
-| **Flatpak Sanitization** | `flatpak update -y --noninteractive && flatpak uninstall --unused -y` | Aislamiento AppImage |
-| **Git Repos Status/Sync**| `bash SCRIPTS/sync_git_repos.sh --status` (`--fetch` / `--sync`) | Control Versiones |
-| **Catálogo Imágenes** | `python3 SCRIPTS/update_floydia.py --images` | Multimodal |
-| **Memory Compactor** | `python3 SCRIPTS/memory_compactor.py` (bajo lock exclusivo) | Memoria |
-| **Graphify AST** | `graphify update .` | AST Grafo |
-| **CODEX_FLOYDIA** | `python3 SCRIPTS/update_floydia.py --codex` | Manifiesto |
-| **NotebookLM Salud** | `python3 SCRIPTS/notebooklm_curator.py --health` | Ground Truth |
-| **Sync Multi-Agente** | `bash SCRIPTS/sync_skills_multiagent.sh --fix` | Paridad |
-| **Full Sweep Dry-Run** | `python3 SCRIPTS/update_floydia.py --full --dry-run --verbose` | Simulación |
-
-> **Nota de rutas (2026-09-30)**: `f-opti-floydia` **no** forma parte de las 7 skills canónicas
-> desplegadas en `.agents/skills/` (ver `sync_skills_multiagent.sh`). Sus tres scripts SRE viven
-> únicamente en el repo canónico `FLOYDIA/PUBLIC_REPOS/floydia-skills/skills/f-opti-floydia/scripts/`.
-> Las rutas antiguas `.agents/skills/f-opti-floydia/scripts/*` fueron corregidas a esa ubicación.
-> Si en el futuro se despliega la skill, verificar cuál de las dos rutas es válida antes de ejecutar.
+Antes de ejecutar cualquier pipeline de actualización o mantenimiento, el agente ejecuta las siguientes comprobaciones obligatorias:
+1. **Cerrojos de Sistema**: Comprobar que `/var/lib/dpkg/lock-frontend` no esté tomado por otro proceso.
+2. **Espacio en Disco**: Validar que `/` y `/tmp` tengan al menos 500 MB libres (`df -m /tmp`).
+3. **Aislamiento AppImage**: Purgar `LD_LIBRARY_PATH` y `GIO_EXTRA_MODULES` para evitar fallos de librerías.
+4. **Verificación de Red**: Comprobar conectividad básica antes de iniciar descargas (`ping -c 1 1.1.1.1` o DNS).
+5. **Comprobación de Conflictos Syncthing**: Verificar que no existan archivos `.sync-conflict` en carpetas clave.
 
 ---
 
-## 🛡️ 5. Guardrails Inmutables & Protocolo v28
+## 🚀 6. MATRIZ DE EJECUCION DE FASES (PIPELINE A ➔ D)
 
-1. **Idioma Obligatorio (2026-08-20)**: Toda la interacción, menús, logs, advertencias y reportes DEBEN redactarse en **español**.
-2. **P0 — Anti-Fuga de Secretos**: PROHIBIDO escribir credenciales o tokens de `/home/tec/.secrets/antigravity.env` en logs, reportes o prompts externos. Sustituir siempre por `[REDACTED]`.
-3. **P3 — Prohibición de `sync` Global**: PROHIBIDO invocar `sync` en carpetas sincronizadas con Dropbox o Syncthing para evitar I/O stalls en Xorg/Electron.
-4. **P4 — Lista Blanca Estricta Anti-Hang**: El script de rescate (`kill_hung_agents.sh`) NUNCA debe tocar Antigravity IDE, LSPs (`jedi`, `tsserver`), Syncthing ni demonios críticos de sistema.
-5. **Non-Destructive por Defecto**: Comandos que modifiquen paquetes del sistema (`apt upgrade`, purgas) requieren autorización explícita o flag `--yes`.
-6. **#vetado — Aislamiento HP45**: PROHIBIDA la sincronización o réplica desatendida hacia HP45 (`192.168.1.204`).
-7. **P8 — Certificación con Artefacto**: Ningún backup ni verificación se da por válido sin citar el manifiesto `.sha256`, la línea `OK` en log y el heartbeat.
-8. **P9 — Aislamiento de Entorno AppImage**: Toda ejecución de `flatpak` o llamadas a herramientas bare-metal debe purgar variables `LD_LIBRARY_PATH` contaminadas por AppImages (ej. `cockpit-tools`) para evitar fallos de resolución de símbolos (`libmalcontent-0.so.0`).
-9. **P10 — Actualización Flatpak Dual**: Actualizar siempre a nivel de usuario (`flatpak update -y`) y a nivel de sistema (`sudo flatpak update -y`), saneando runtimes obsoletos con `flatpak uninstall --unused -y`.
-10. **P11 — Sincronización Git No Destructiva**: En sincronización de repositorios (`sync_git_repos.sh`), únicamente aplicar `--ff-only` si el repositorio está en estado limpio (`clean`) y sin commits locales no pusheados. Nunca forzar sobrescrituras.
+### 6.1 Fase A — SRE Telemetría & Quick Wins
+- **Comandos**: `python3 FLOYDIA/PUBLIC_REPOS/floydia-skills/skills/f-opti-floydia/scripts/ecosystem_probe.py` y `bash SCRIPTS/antigravity_speed_boost.sh --apply --clean-tmp --kill-duplicates`.
+- **Timeout**: 25s.
+- **Aserción**: Código de salida exit 0 y reporte de telemetría emitido.
+
+### 6.2 Fase B — Actualización Core Bare-Metal
+- **Comandos**: `python3 SCRIPTS/update_floydia.py --full --dry-run` (o `--yes` si fue confirmado). Incluye paquetes OS, Flatpak con `env -u LD_LIBRARY_PATH flatpak update -y`, memoria y reconstrucción Graphify AST.
+- **Timeout**: 300s.
+- **Aserción**: Manifiesto `CODEX_FLOYDIA.md` generado y exit 0.
+
+### 6.3 Fase C — Ground Truth NotebookLM Health
+- **Comando**: `python3 SCRIPTS/notebooklm_curator.py --health`.
+- **Timeout**: 30s.
+- **Aserción**: Diagnóstico de cuadernos SSOT completado sin excepciones no controladas.
+
+### 6.4 Fase D — Paridad Multi-Agente & Git Status
+- **Comandos**: `bash SCRIPTS/sync_skills_multiagent.sh --fix` y `bash SCRIPTS/sync_git_repos.sh --status`.
+- **Timeout**: 30s.
+- **Aserción**: Paridad de enlaces simbólicos verificada al 100% y estado de árboles de trabajo reportado.
 
 ---
 
-## 🔄 6. Compatibilidad Multi-Agente (Trinidad Canónica)
+## 🚨 7. CONTINGENCIA Y RECUPERACIÓN ANTE FALLOS
+
+* **Fallo en APT/DPKG**: Si el gestor de paquetes reporta lock ocupado o interrupción, ejecutar `sudo dpkg --configure -a` únicamente bajo autorización explícita; nunca forzar `kill -9` sobre `dpkg`.
+* **Fallo en Sincronización Git**: Si un repositorio presenta cambios no confirmados (`dirty`) o divergencias remotas, omitir la sincronización automática y reportar el estado exacto; nunca invocar `git reset --hard` sin orden expresa.
+* **Degradación Elegante**: Si una fase no crítica falla (ej. timeout de red en comprobación de NotebookLM), registrar el fallo como advertencia en el reporte final y permitir que las fases restantes continúen.
+
+---
+
+## ⏱️ 8. TIMEOUTS Y ANTI-HANG
+
+* Todo comando con latencia de I/O o red se ejecuta con límite estricto de espera de 20s (salvo descargas masivas de paquetes en APT/Flatpak, limitadas a 300s).
+* Si un comando supera su tiempo asignado, se cancela inmediatamente mediante group-kill para recuperar el control sin dejar procesos huérfanos.
+* Se prohíbe el uso de comandos interactivos que soliciten contraseñas en bloqueante; utilizar siempre `sudo -n` para fail-fast inmediato.
+
+---
+
+## 🛡️ 9. GUARDRAILS INMUTABLES SRE (PROTOCOLO v28.1)
+
+1. **Idioma Obligatorio**: Menús, logs, advertencias y reportes DEBEN redactarse en **español**.
+2. **P0 — Anti-Fuga de Secretos**: PROHIBIDO escribir credenciales o tokens de archivos `.env` en logs o salidas terminal. Reemplazar siempre por `[REDACTED]`.
+3. **P3 — Prohibición de `sync` Global**: PROHIBIDO invocar la instrucción de shell `sync` en carpetas sincronizadas con Dropbox o Syncthing para prevenir micro-bloqueos en Electron/Xorg.
+4. **P4 — Lista Blanca Estricta Anti-Hang**: El rescate de procesos (`kill_hung_agents.sh`) NUNCA debe tocar Antigravity IDE, LSPs (`jedi`, `tsserver`), Syncthing, Dropbox ni demonios del sistema.
+5. **P8 — Certificación con Evidencia**: Toda actualización debe registrar un artefacto verificable en `.session/` con hash SHA256 y reporte de ejecución.
+6. **P9 — Aislamiento AppImage**: Purgar siempre `LD_LIBRARY_PATH` antes de invocar `flatpak` o utilidades del sistema para evitar colisiones con librerías empaquetadas.
+7. **P10 — Actualización Flatpak Dual**: Actualizar runtimes a nivel de usuario y a nivel de sistema mediante invocaciones separadas y saneamiento de huérfanos.
+8. **P11 — Sincronización Git No Destructiva**: Los repositorios solo admiten actualización remota mediante `git pull --ff-only` si el árbol de trabajo está estrictamente limpio (`clean`). Nunca forzar sobrescrituras.
+
+---
+
+## 🔄 10. IDEMPOTENCIA Y LEDGER DE SESIÓN
+
+* Cada ejecución completa o parcial genera un registro estructurado en `.session/master_update_last_run.json` con timestamps, fases completadas y códigos de retorno.
+* La re-ejecución de cualquier fase es estrictamente segura e idempotente, sin duplicar entradas ni sobrescribir archivos sin respaldo.
+* Toda mutación en archivos críticos genera un respaldo previo con extensión `.bak`.
+
+---
+
+## 🌐 11. PARIDAD MULTI-AGENTE Y TRINIDAD CANÓNICA
 
 | Entorno / Agente | Estado | Mecanismo de Integración |
 |---|:---:|---|
-| **Antigravity IDE** | 🟢 Nativo | Lectura directa en `.agents/skills/f-master-update/SKILL.md` con menú interactivo |
+| **Antigravity IDE** | 🟢 Nativo | Lectura directa en `.agents/skills/f-master-update/SKILL.md` con menú Bento interactivo |
 | **OpenCode Desktop / CLI** | 🟢 Sincronizado | Symlink automático en `~/.opencode/skills/f-master-update` vía `sync_skills_multiagent.sh` |
-| **DeepSeek Harness (`dsh`)** | 🟢 Sincronizado | Enlace SSOT en `~/.dsh/AGENTS.md` y verificación de perfiles Cordis Web |
-| **Hermes / Qoder** | 🟡 CLI Directo | Ejecución de scripts en modo no interactivo vía CLI (`python3 SCRIPTS/...`) |
+| **DeepSeek Harness (`dsh`)** | 🟢 Sincronizado | Enlace SSOT en `~/.dsh/` y perfiles de ejecución compartidos |

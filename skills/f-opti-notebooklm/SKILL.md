@@ -1,6 +1,6 @@
 ---
 name: f-opti-notebooklm
-description: "Curador, optimizador y enriquecedor soberano de la base de verdad Google NotebookLM. Permite seleccionar cuadernos específicos o todos los 11 cuadernos activos, buscar y sintetizar fuentes nuevas, enriquecer los cuadernos con hallazgos de sesiones y generar informes temáticos para el Memory Bank. USAR cuando el usuario invoque /f-opti-notebooklm, /opti-notebooklm, /curar-notebooks o solicite enriquecer/auditar cuadernos. NO USAR para consultas de código local sin relación con los cuadernos indexados."
+description: "Curador, optimizador y enriquecedor soberano de la base de verdad Google NotebookLM. Permite seleccionar cuadernos específicos o todos los cuadernos activos (SSOT: `python3 SCRIPTS/notebooklm_curator.py --list`; nunca fijar el número en el texto), buscar y sintetizar fuentes nuevas, enriquecer los cuadernos con hallazgos de sesiones y generar informes temáticos para el Memory Bank. USAR cuando el usuario invoque /f-opti-notebooklm, /opti-notebooklm, /curar-notebooks o solicite enriquecer/auditar cuadernos. NO USAR para consultas de código local sin relación con los cuadernos indexados."
 version: 1.1.0
 triggers:
   - /f-opti-notebooklm
@@ -14,7 +14,7 @@ triggers:
 
 # Skill: Optimizador y Curador Soberano de NotebookLM (`f-opti-notebooklm` v1.1)
 
-> **Propósito**: Mantener la base de verdad de Google NotebookLM en máxima integridad y profundidad técnica. Proporciona un flujo guiado menu-first para enriquecer cuadernos con nuevas fuentes externas, hallazgos de sesiones y transcripciones pasadas, generar resúmenes ejecutivos para el Memory Bank y auditar la cobertura de los 11 cuadernos activos.
+> **Propósito**: Mantener la base de verdad de Google NotebookLM en máxima integridad y profundidad técnica. Proporciona un flujo guiado menu-first para enriquecer cuadernos con nuevas fuentes externas, hallazgos de sesiones y transcripciones pasadas, generar resúmenes ejecutivos para el Memory Bank y auditar la cobertura de los cuadernos activos (SSOT: `python3 SCRIPTS/notebooklm_curator.py --list`; nunca fijar el número en el texto).
 
 ---
 

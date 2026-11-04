@@ -1,17 +1,20 @@
 ---
 name: f-mejora-prompt
-description: "🚨 STOP OBLIGATORIO: Optimizador de prompts v5.1 Menu-First. PROHIBIDO ejecutar la tarea del usuario, buscar en archivos o escribir código. Tu ÚNICA respuesta inicial debe ser emitir el MENÚ interactivo de 8 modos (salvo que el usuario incluya un dígito 1-8). Invocar con /f-mejora-prompt o /mejora."
-version: 5.4.0
+description: "🚨 STOP OBLIGATORIO (ZERO-TOOL TURN 0): Motor Enterprise de Optimización de Prompts v6.0.0 (Protocolo v28.1). PROHIBIDO ejecutar la tarea del usuario, leer archivos o invocar herramientas en el turno inicial. Tu ÚNICA acción en Turno 0 es presentar el MENÚ BENTO de 8 modos (salvo atajo posicional explícito '/f-mejora-prompt [1-8] <texto>')."
+version: 6.0.0
+protocol: FloydIA-v28.1
 triggers:
   - /f-mejora
   - /f-mejora-prompt
   - /mejora
   - /mejor
   - /mejora-prompt
+  - /optimiza
   - optimizar prompt
   - mejorar prompt
   - refinar prompt
   - pulir prompt
+  - blindar prompt
   - optimize prompt
   - improve prompt
   - investigacion profunda prompt
@@ -21,215 +24,233 @@ triggers:
   - ranking modelos
   - seleccion harness
   - seleccionar harness
-  - cual harens usar
+  - cual harness usar
   - que harness usar
 ---
 
-# Skill: Optimización Avanzada de Prompts v5.1 (`f-mejora-prompt`)
-## Motor Interactivo Menu-First, Formato Bloque .md Canónico & Recuperación SSOT
+# Skill: Optimización Avanzada de Prompts (f-mejora-prompt v6.0.0)
+## Motor Interactivo Menu-First, Formato Canónico Cuádruple & Calibración de Motores (Protocolo v28.1)
 
-> 🚨 **COMPUERTA DE INTERCEPCIÓN DURA (STOP ABSOLUTO — NUNCA EJECUTAR LA TAREA NI LLAMAR HERRAMIENTAS)**:
-> Cuando el usuario invoque esta skill (con `/f-mejora-prompt`, `/f-mejora`, `/mejora`, etc.):
-> 1. **ESTÁ ESTRICTAMENTE PROHIBIDO EJECUTAR LA TAREA DEL TEXTO**:
->    - Si el texto dice *"haz una web..."*, *"despliega el servicio..."*, *"analiza el bug..."*, *"actualiza el sistema..."*, **NO programes la web, NO modifiques código, NO ejecutes comandos de solución, NO crees `implementation_plan.md`**.
->    - Tu único rol es **OPTIMIZAR Y BLINDAR LA DIRECTIVA** para que pueda ejecutarse con máxima precisión.
-> 2. **PROHIBIDO LLAMAR HERRAMIENTAS EN TURNO 0 (REGLA CERO-HERRAMIENTAS)**:
->    - Si el usuario no especificó un número de modo (`1` a `8`), **ESTÁ PROHIBIDO LLAMAR A NINGUNA HERRAMIENTA** (`view_file`, `grep_search`, `find_by_name`, `run_command`, etc.). NO busques código, NO investigues el tema del usuario.
->    - **DETENTE EN ESE MISMO TURNO** y presenta **ÚNICAMENTE** el menú interactivo en texto directo como tu respuesta.
+> 🚨 **COMPUERTA DE INTERCEPCIÓN DURA (TURNO 0 — ZERO-TOOL STRICT ENFORCEMENT)**:
+> Cuando el usuario invoque esta skill mediante cualquiera de sus triggers:
+> 1. **PROHIBIDO EJECUTAR LA TAREA INTERNA**:
+>    - Si el texto contiene directivas como *"crea un script..."*, *"corrige el bug..."*, *"refactoriza..."*, **NO programes, NO modifiques archivos, NO ejecutes comandos de solución, NO crees planes de implementación**.
+>    - Tu único rol es **OPTIMIZAR, CALIBRAR Y BLINDAR LA DIRECTIVA** para su posterior ejecución determinista.
+> 2. **REGLA CERO-HERRAMIENTAS EN TURNO 0**:
+>    - Si la instrucción no contiene un dígito explícito del selector (`1` a `8`), **ESTÁ ESTRICTAMENTE PROHIBIDO INVOCAR HERRAMIENTAS** (`view_file`, `grep_search`, `list_dir`, `run_command`, etc.).
+>    - **DETENCIÓN INMEDIATA**: Emite **ÚNICAMENTE** el menú Bento interactivo en texto markdown y finaliza tu turno de inmediato.
 
 ---
 
-## 🎯 1. Menú Interactivo Obligatorio (Menu-First)
+## 🧭 1. MAQUINA DE ESTADOS Y COMPUERTA TURNO 0
 
-Si no se ha recibido un número de modo previo (`1` a `7`), el agente responde **inmediatamente con este menú**:
+```mermaid
+stateDiagram-v2
+    [*] --> T0_Input: Invocación (/f-mejora-prompt, /mejora, /optimiza)
+    
+    state T0_Input {
+        [*] --> Check_Token: ¿Primer token tras comando es [1-8]?
+        Check_Token --> Direct_Dispatch: SÍ (Modo N + Prompt)
+        Check_Token --> Stop_Gate: NO (Sin modo explícito)
+    }
+
+    Stop_Gate --> Render_Bento_Menu: ZERO-TOOL EMISSION
+    Render_Bento_Menu --> Wait_User_Choice: Detiene Turno (Espera interacción)
+    Wait_User_Choice --> Direct_Dispatch: Usuario envía Modo [1-8]
+
+    state Direct_Dispatch {
+        [*] --> Route_Mode
+        Route_Mode --> M1_Full: Modo 1 (Workspace + NLM)
+        Route_Mode --> M2_Light: Modo 2 (Ahorro Tokens)
+        Route_Mode --> M3_Variants: Modo 3 (Dual A/B)
+        Route_Mode --> M4_Auto: Modo 4 (Heurístico)
+        Route_Mode --> M5_Deep: Modo 5 (Investigación Profunda)
+        Route_Mode --> M6_Swarm: Modo 6 (Consenso Enjambre)
+        Route_Mode --> M7_Harness: Modo 7 (Invocación Arnés)
+        Route_Mode --> M8_ApiScan: Modo 8 (Calibración Inferencia)
+    }
+
+    Direct_Dispatch --> Format_Delivery: Ensamblado en Bloque Cuádruple
+    Format_Delivery --> Render_Audit_Radar: Ficha Técnica + Radar Calidad (0-10)
+    Render_Audit_Radar --> Close_Menu: Menú de Acciones Rápidas (Letras a-f)
+    Close_Menu --> [*]
+```
+
+---
+
+## 🎯 2. MENÚ BENTO INTERACTIVO (MENU-FIRST)
+
+Si el usuario no especifica un número de modo (`1` a `8`), el agente emite inmediatamente este menú Bento:
 
 ```markdown
-🎯 **Motor de Optimización de Prompts v5.1**
-Selecciona cómo deseas optimizar tu instrucción respondiendo con el **número** correspondiente:
+╔═════════════════════════════════════════════════════════════════════════════════════════════════╗
+║                 🎯 MOTOR DE OPTIMIZACIÓN Y REFINAMIENTO DE PROMPTS v6.0.0 Enterprise             ║
+║                     Ecosistema FloydIA Agent OS — Protocolo v28.1                               ║
+╚═════════════════════════════════════════════════════════════════════════════════════════════════╝
 
-1️⃣ **Modo FULL (Workspace + Obsidian + Lecciones + Consulta NLM Rápida)**
-   ↳ Inyecta tu entorno local (HP15 MX Linux / Debian 13), dominios canónicos, topología Proxmox,
-      guardrails de `lessons-learned.md` y realiza una consulta dirigida al cuaderno
-      PROMPT_ENGINEERING de NotebookLM (129 fuentes). Entrega salida completa con ficha técnica.
+Selecciona cómo optimizar tu instrucción respondiendo con el NÚMERO correspondiente:
 
-2️⃣ **Modo Ahorro de Tokens (Aislado / Portable / Ultra-Ligero)**
-   ↳ Optimización agnóstica de mínimo consumo de tokens, 100% portable y lista para copiar
-      y pegar en ChatGPT, Claude Desktop u otra IA externa sin contexto local.
+1️⃣ 🏢 **Modo FULL (Workspace + Obsidian + Lecciones + Ground Truth NLM)**
+   ↳ Inyecta entorno local (HP15 Debian 13 / MX Linux), dominios canónicos, topología LXC
+      (CT106 Syncthing / CT114 Playwright remoto), guardrails pertinentes de `lessons-learned.md`
+      y consulta dirigida al SSOT de NotebookLM. Entrega con ficha técnica y radar de calidad.
 
-3️⃣ **Modo Variantes (2 Alternativas Calibradas)**
-   ↳ Genera dos versiones: **Opción A (Conservadora / Determinista)** y **Opción B (Creativa / Exploratoria)**.
+2️⃣ ⚡ **Modo Ahorro de Tokens (Aislado / Portable / Ultra-Ligero)**
+   ↳ Optimización agnóstica de mínimo consumo de tokens, saneada de redundancias y slop, 100%
+      portable para copiar y pegar en ChatGPT, Claude Desktop o interfaces externas.
 
-4️⃣ **Modo Auto / Rápido**
-   ↳ Detección automática inteligente según la complejidad y el contenido de tu instrucción.
+3️⃣ 🔀 **Modo Variantes Calibradas (Dual A/B)**
+   ↳ Genera dos alternativas: **Opción A (Conservadora / Determinista / Temp 0.15)** y
+      **Opción B (Estratégica / Exploratoria / Temp 0.7)**.
 
-5️⃣ **🔬 Modo Investigación Profunda (NotebookLM + Obsidian + Catálogo + Journals)**
-   ↳ Pipeline exhaustivo de 7 pasos: escanea los 11 cuadernos de NotebookLM (1,500+ fuentes),
-      el Vault de Obsidian, los 27+ archivos de prompts patrón y journals recientes. Coteja, sintetiza
-      y optimiza con evidencia documentada. (Máxima calidad analítica).
+4️⃣ 🧠 **Modo Auto / Heurístico**
+   ↳ Clasificación automática inteligente: detecta si la directiva requiere contexto local
+      (Modo 1) o es puramente conceptual/portable (Modo 2).
 
-6️⃣ **🐝 Modo Enjambre Multiconsulta (Consenso 5 Motores a coste $0.00)**
-   ↳ Despacho concurrente a motores del harness (Nemotron 3 Ultra 550B, DeepSeek R1 Distill, Gemini Flash, etc.) para
-      contrastar enfoques y sintetizar una directiva maestra consensuada.
+5️⃣ 🔬 **Modo Investigación Profunda (Deep Research de 7 Pasos)**
+   ↳ Pipeline exhaustivo: escanea los cuadernos activos de NotebookLM (`notebooklm_curator.py`),
+      el Vault de Obsidian, catálogo histórico de prompts y journals recientes de fallas.
 
-7️⃣ **⚙️ Modo Harness (Optimiza + Invoca Harness Adecuado)**
-   ↳ Analiza la tarea, selecciona el modo del harness óptimo (1‑Full Power, 2‑Working Horse, 3‑NIM Only,
-      4‑AGY+Free, 5‑Free Light) y genera el prompt optimizado **ya prefijado con la invocación**
-      `/f-harness <modo>` lista para copiar/pegar. Ideal para delegar a la IA externa o ejecutar en
-      sesión harness sin pasos extra.
+6️⃣ 🐝 **Modo Enjambre Multiconsulta (Consenso de Motores a $0.00)**
+   ↳ Despacho concurrente a modelos frontier y locales del arnés para contrastar enfoques y
+      sintetizar una directiva maestra consensuada.
 
-8️⃣ **🔍 Modo Escaneo de APIs y Selección de Harness**
-   ↳ Re-analiza el inventario de APIs auditado (`AUDITORIA_APIS_COMPLETA_2026-10-20`), clasifica proveedores
-      por estado (OPERATIVA/SIN_VALOR/BLOQUEADA/INACCESIBLE/402/403), cruza con rankings de inteligencia
-      y rendimiento (Artificial Analysis, LMArena/Chatbot Arena, OpenRouter) y sentimiento técnico
-      (last30days, Reddit/HN), y recomienda el modo de harness y el modelo óptimo para la tarea.
-      Ideal para decidir qué harness usar o redefinir según qué APIs están disponibles y el nivel
-      de inteligencia de los modelos.
+7️⃣ ⚙️ **Modo Invocación de Harness (Prefijado para Ejecución)**
+   ↳ Evalúa la dificultad técnica, selecciona la marcha óptima del arnés (Modo 1 Full Power,
+      Modo 2 Working Horse, Modo 3 NIM Only, Modo 4 AGY+Free, Modo 5 Free Light) y prefija
+      el prompt optimizado con `/f-harness <modo>` listo para ser ejecutado.
+
+8️⃣ 🔍 **Modo Calibración de Inferencia & API Matrix**
+   ↳ Cruza el inventario de modelos operativos con rankings de inteligencia (Artificial Analysis,
+      LMArena) y latencias reales para recomendar el modelo idóneo según la complejidad.
 
 ---
-💡 *¿Cómo responder?*
-- Si ya incluiste tu directiva arriba, responde simplemente con el número: `1`–`7`.
-- Si aún no la has escrito, responde con el número y tu idea (ejemplo: `7 Quiero un prompt para refactorizar un módulo Python legacy`).
+💡 *¿Cómo proceder?*
+- Si ya adjuntaste tu instrucción, responde con el número: `1` a `8`.
+- Si deseas ingresar instrucción y modo a la vez, escribe: `[N] [Tu texto o requerimiento]`.
 ```
 
 > [!TIP]
-> **Atajo Directo**: Si el usuario escribe el número junto al comando (ej. `/f-mejora-prompt 1 [texto]` o `7 optimiza esto...`), el agente salta la presentación del menú y optimiza directamente en ese modo.
+> **Atajo Directo**: Si la instrucción inicial incluye el número (ej. `/f-mejora-prompt 1 Crea un scraper...` o `/mejora 2 Optimiza esta función`), el agente salta la presentación del menú y ejecuta la optimización de forma inmediata.
 
 ---
 
-## 📦 2. FORMATO DE ENTREGA CANÓNICO: BLOQUE .md ÚNICO
+## 📦 3. FORMATO DE ENTREGA CANÓNICO Y ENVOLTORIO CUÁDRUPLE
 
-> 💎 **CONTRATO OBLIGATORIO DE RESPUESTA (PREDETERMINADO)**:
-> El usuario exige que toda directiva o prompt optimizado se entregue **DENTRO DE UN ÚNICO BLOQUE DE CÓDIGO MARKDOWN (` ```markdown ... ``` `)**.
-> - **Prohibido**: Entregar prompts divididos en múltiples bloques rotos o mezclar explicaciones dentro del bloque del prompt.
-> - **El bloque `.md` debe ser 100% autocontenido**: listo para copiar y pegar con un solo clic.
+> 💎 **CONTRATO OBLIGATORIO DE RESPUESTA**:
+> Toda directiva optimizada DEBE ser entregada dentro de un bloque delimitado por **CUATRO BACKTICKS (` ````markdown ... ```` `)**.
+> - **Justificación Técnica**: El uso de 4 backticks garantiza que los bloques de código internos de 3 backticks (Python, SQL, JSON, bash) NO rompan el formateo del prompt en el cliente agéntico.
+> - **Autocontenido**: El bloque debe contener el 100% de la directiva lista para ser copiada con un solo clic.
 
-### Estructura de la Respuesta al entregar el prompt:
+### Estructura Canónica de Entrega:
 
-1. **Breve Diagnóstico** (1-3 líneas: Modo seleccionado, Modelo objetivo, Clúster temático).
-2. **Bloque Markdown Canónico**:
+1. **Diagnóstico Breve** (1-3 líneas: Modo activo, Arquetipo de modelo asignado, Dominio).
+2. **Bloque Markdown Cuádruple**:
 ````markdown
 ```markdown
-# [TÍTULO CLARO Y DETERMINISTA DEL PROMPT]
+# [TÍTULO DESCRIPTIVO Y DETERMINISTA DE LA DIRECTIVA]
 
-> **Rol y Objetivo**: ...
-> **Modelo Recomendado**: LRM / Estándar | Temperatura sugerida: 0.1 - 0.3
+> **Rol y Especialidad**: [Definición de rol de ingeniería / Staff]
+> **Arquetipo de Modelo**: [LRM Razonamiento Profundo / Estándar Few-Shot] | **Temperatura**: [0.15 - 0.3]
+> **Contexto Operativo**: [Entorno, Host, Rutas canónicas y Servicios vinculados]
 
-## 🎯 Objetivo Principal
-...
+## 🎯 1. Objetivo Principal
+[Descripción unívoca y medible del resultado esperado]
 
-## 🔒 Reglas Inmutables y Restricciones
-...
+## 🔒 2. Reglas Inmutables y Restricciones Técnicas
+- **R1 - Seguridad & Secretos**: Prohibido exponer valores de tokens o credenciales; utilizar `[REDACTED]`.
+- **R2 - No-Destructivo & Anti-Hang**: Respetar listas blancas y límites de espera <20s.
+- **R3 - Evidencia Obligatoria**: No cerrar la tarea sin artefacto técnico verificable (exit 0, hash SHA256).
 
-## 📋 Instrucciones Paso a Paso
-...
+## 📋 3. Instrucciones Paso a Paso
+1. **Fase de Inspección / Preflight**: ...
+2. **Fase de Modificación / Ejecución**: ...
+3. **Fase de Verificación / QA**: ...
 
-## 📤 Contrato de Salida
-...
+## 📤 4. Contrato de Salida
+[Especificación exacta del formato de entrega, JSON Schema, diff unificado o reporte markdown]
 ```
 ````
-3. **Ficha Técnica y Radar de Calidad (0 a 10)** fuera del bloque.
-4. **Menú de Cierre** (acciones siguientes).
+3. **FICHA TECNICA Y RADAR DE CALIDAD (0 a 10)**.
+4. **Menú de Cierre Interactivo (Letras a-f)**.
 
 ---
 
-## 🛠️ 3. Fuentes de Verdad y Recuperación SSOT
+## ⚙️ 4. PIPELINE DE CALIBRACIÓN POR ARQUETIPO DE MODELO
 
-| Fuente | Uso Permitido | Modos que la Usan |
-|---|---|---|
-| `memory-bank/core/lessons-learned.md` | Extraer guardrails pertinentes del Top 10 recurrente | 1, 5 |
-| `memory-bank/prompts/CATALOGO_HISTORICO_PROMPTS_OPTIMIZADOS.md` | Buscar duplicados (`>= 0.85`) y recuperar patrones | 1, 5 |
-| `memory-bank/prompts/MOC_PROMPT_ENGINEERING_MASTERY.md` | Recuperar taxonomía y clústeres (`CAT_01` a `CAT_08`) | 1, 5 |
-| `memory-bank/prompts/*.md` (27+ archivos) | Escaneo exhaustivo de patrones, suites y plantillas | 5 |
-| `SCRIPTS/model_router.md` | Resolver capacidades de modelo (LRM Thinking vs Estándar) | 1, 2, 3, 5 |
-| `SCRIPTS/notebooklm_curator.py` | Enrutamiento semántico a cuadernos relevantes | 1 (rápido), 5 (exhaustivo) |
-| NotebookLM MCP / browser | Consulta directa de fuentes en cuadernos temáticos | 1 (dirigida), 5 (exhaustiva) |
-| Obsidian Vault MCP | Buscar notas y wikilinks relacionados | 5 |
-| `memory-bank/journal/*.md` | Extraer soluciones y fallas validadas recientemente | 5 |
-| `/home/tec/Descargas/APIS/INFORME_AUDITORIA_APIS_COMPLETA_2026-10-20.md` + `.csv` | Inventario auditado de 226 variables de API, 67 proveedores, estados (OPERATIVA/SIN_VALOR/BLOQUEADA/INACCESIBLE/etc.), latencias y TTFT reales | 8 (nuevo) |
-| `/home/tec/Descargas/APIS/IAS WEB/` | Catálogo técnico de APIs, rankings y sentimiento: Artificial Analysis API, LMArena HF, OpenRouter, Reddit/HN, queries de silent-nerf y rate-limit | 8 (nuevo) |
-| `/home/tec/Descargas/APIS/Enjambre/` | Informe enjambre LLMs, modelos usados, stack MVP de enriquecimiento desde `.env`, matriz comparativa de fuentes de ranking | 8 (nuevo) |
-| `SCRIPTS/model_router.md` | Matriz de 5 marchas del harness, rotación NIM C1/C2/C7/C9, capacidades C0..C6, modelos `:free` verificados | 1, 2, 3, 5, 8 |
-| `SCRIPTS/harness_mode.sh` / `SCRIPTS/harness_mode.json` | Conmutación y consulta del modo activo del harness (1-6) | 7, 8 |
-| `SCRIPTS/nim_rotator.sh` | Rotación round-robin de cuentas NVIDIA NIM con cooldown 429 y fail-fast 401/403 | 3, 8 |
+### Arquetipo A: Modelos LRM / Razonamiento Extendido (DeepSeek V4-Pro, o1/o3, Nemotron Ultra)
+- **Estrategia**: *Goal-and-Constraints Architecture*.
+- **Directriz**: NO forzar razonamiento paso a paso innecesario ("piensa paso a paso"). Especificar exhaustivamente las metas finales, invariantes de sistema, restricciones negativas (lo que NO se debe hacer) y aserciones de prueba. El modelo deducirá internamente la ruta óptima de inferencia.
 
-### 🔒 Regla Estricta Anti-Fuga de Secretos
-**NUNCA** copies valores de contraseñas, tokens de API o claves de `.env` en un prompt optimizado. Usa siempre variables de entorno genéricas como `${MI_VARIABLE}` o referencias de archivo `[REDACTED]`.
+### Arquetipo B: Modelos Estándar / Instruccionales (Claude Sonnet, GPT-4o, Gemini Flash)
+- **Estrategia**: *Decomposed Flow & Few-Shot Prompting*.
+- **Directriz**: Estructurar la directiva con pasos secuenciales numerados, ejemplos de entrada/salida (Few-Shot) y heurísticas explícitas de validación en cada compuerta.
 
 ---
 
-## ⚙️ 4. Pipeline de Optimización por Modo
+## 🛠️ 5. FUENTES SSOT Y ANTI-FUGA DE SECRETOS
 
-### Opción 1: Modo FULL (Workspace + Obsidian + Lecciones + NLM Rápida)
-1. **Contención**: Delimita el input del usuario en `<prompt_candidate>`.
-2. **Calibración de Modelo**: Si es LRM (DeepSeek-R1 / Nemotron 3 Ultra 550B / O1 / O3), usa *Goal-and-Constraints* sin CoT forzado. Si es Estándar (Claude / GPT-4o / Gemini Flash), usa *Few-Shot* y pasos ordenados.
-3. **Inyección de Guardrails Locales**: Inyecta entorno real (HP15 Debian 13 / MX Linux, CT114 Playwright :3000, CT106 Syncthing :8384).
-4. **Consulta Rápida NLM**: Ejecuta `python3 SCRIPTS/notebooklm_curator.py "<tema>"` y si hay match, añade 2-3 técnicas clave.
-5. **Entrega**: Formato canónico en bloque `.md` único + Ficha técnica.
-
-### Opción 2: Modo Ahorro de Tokens (Aislado / Portable)
-1. **Saneamiento**: Elimina "slop", relleno y ambigüedad.
-2. **Estructura Compacta**: Rol, Objetivo, Reglas estrictas y Contrato de salida limpio.
-3. **Entrega**: Bloque `.md` único ultra-ligero listo para web/chatbots.
-
-### Opción 3: Modo Variantes
-- Genera dos bloques `.md`: **Variante A (Determinista / Baja Temp 0.1)** y **Variante B (Estratégica / Creativa Temp 0.7)**.
-
-### Opción 4: Modo Auto / Rápido
-- Analiza la longitud y complejidad del texto. Si requiere entorno local → Modo 1; si es una consulta general → Modo 2.
-
-### Opción 5: 🔬 Modo Investigación Profunda (Deep Research)
-- Ejecuta los 7 pasos de investigación:
-  1. Enrutamiento NotebookLM (`notebooklm_curator.py`).
-  2. Consulta a los cuadernos activos detectados.
-  3. Rastreo del Vault de Obsidian.
-  4. Búsqueda en el Catálogo Histórico (`memory-bank/prompts/`).
-  5. Consulta a Journals recientes (`memory-bank/journal/`).
-  6. Síntesis y resolución de contradicciones en tabla de evidencia.
-  7. Redacción del prompt final enriquecido en el bloque `.md` único.
-
-### Opción 6: 🐝 Modo Enjambre Multiconsulta
-- Despacha el borrador a motores disponibles del harness para extraer críticas constructivas y fusionar la mejor versión.
-- **Composición de motores y reglas de consenso: SSOT en `memory-bank/prompts/ENJAMBRE_5_MOTORES_SSOT.md`** (nunca embeber la lista aquí).
-
-### Opción 7: ⚙️ Modo Harness (Invocación Adecuada)
-- El skill analiza la tarea del usuario y:
-  1. **Detecta la dificultad**: razonamiento, medio, flash, etc.
-  2. **Selecciona el modo del harness** más apropiado:
-     - Modo 1 (Full Power): AGY → Nemotron Ultra 550B → DeepSeek V4.1 Flash → Pool
-     - Modo 2 (Working Horse): V4 Flash → Nemotron Super → AGY → Laguna S
-     - Modo 3 (NIM Only): Nemotron 3.5 Super VL, rotación NIM C1→C9
-     - Modo 4 (AGY+Free): AGY → DeepSeek V4.1 Flash → Pool Free
-     - Modo 5 (Free Light): Pool Free rotativo (Mistral, GLM, DashScope, Ollama)
-   3. **Genera el prompt optimizado** con bloque `.md` canónico que **comienza con la invocación** `/f-harness <modo>`, seguida del objetivo y reglas del usuario.
-   4. **Entrega** el prompt con ficha técnica y el comando listo para copiar/pegar en cualquier sesión harness.
-
-### Opción 8: 🔍 Modo Escaneo de APIs y Selección de Harness
-1. **Leer inventario de APIs**: parsea `AUDITORIA_APIS_COMPLETA_2026-10-20.md` (y su CSV) del workspace; extrae proveedor, endpoint, estado, latencia p50, TTFT, catálogo de entradas, modelo probado y cuota/tier.
-2. **Clasificar disponibilidad**: agrupa por estado — `OPERATIVA` (candidata), `SIN_VALOR` (sin credencial), `BLOQUEADA`/`403` (denegada), `INACCESIBLE` (sin red/DNS), `SIN_SALDO`/`402` (sin crédito), `CREDENCIAL_INVALIDA` (401).
-3. **Cruzar con rankings de inteligencia**: para cada proveedor/modelo operativo, consulta:
-   - `Artificial Analysis API` (`GET /api/v2/language/models/free`) → Intelligence Index, tokens/s, TTFT, precios input/output.
-   - `LMArena / Chatbot Arena` (dataset HF `lmarena-ai/leaderboard-dataset`) → Arena Score/Elo y CI.
-   - `OpenRouter` (`GET /api/v1/models`) → pricing, contexto, disponibilidad y sorts (intelligence/latency/throughput/price).
-4. **Capa de sentimiento técnico**: `last30days` + Reddit `.json`/PullPush + Hacker News Algolia con queries `<modelo> silent nerf | rate limit | 429 | best model | daily driver` (última semana/mes).
-5. **Construir registro enriquecido por modelo**: `{slug, proveedor, estado, elo/ia_index, tps, ttft_s, precio_in, precio_out, contexto, sentimiento, senales_nerf, menciones_rate_limit, fuente, fecha_consulta}`.
-6. **Recomendar modo de harness**: según la dificultad de la tarea y los modelos disponibles:
-   - Razonamiento profundo/arquitectura → Modo 1 (Full Power) o 6 (AGY Deep) con Nemotron/Gemini Pro. [Kimi K3 retirado: EOL 2026-10-15]
-   - Desarrollo diario → Modo 2 (Working Horse).
-   - Solo NIM → Modo 3 (NIM Only).
-   - Preservar cuota de pago → Modo 4 (AGY+Free).
-   - Tareas triviales/$0.00 → Modo 5 (Free Light) con modelos `:free` auditados.
-7. **Entrega**: bloque `.md` único con el inventario filtrado (solo OPERATIVA), tabla de rankings por modelo, recomendación de modo de harness (`/f-harness <N>`) y modelo óptimo, más ficha técnica y comando listo para ejecutar.
+- `memory-bank/core/lessons-learned.md`: Extraer únicamente las lecciones directamente correlacionadas con la temática del prompt (máximo 3 lecciones, presupuesto ≤300 tokens).
+- `SCRIPTS/model_router.md` y `SCRIPTS/harness_mode.json`: Resolver capacidades de inferencia reales.
+- `SCRIPTS/notebooklm_curator.py`: Enrutamiento semántico dinámico hacia los cuadernos SSOT.
+- **ANTI-FUGA DE SECRETOS**: Prohibido incluir credenciales reales de `.secrets` o archivos de entorno. Toda clave sensible se declara como `${VAR_NAME}` o `[REDACTED]`.
 
 ---
 
-## 📤 5. Menú de Cierre
+## ⏱️ 6. GOBERNANZA DE TIMEOUTS Y ANTI-HANG
 
-Al entregar el prompt optimizado en su bloque `.md`, ofrece las siguientes acciones rápidas:
+- Toda consulta subordinada a herramientas de red, MCPs o scripts auxiliares (`notebooklm_curator.py`, Obsidian, APIs) está sujeta a un **timeout estricto de 20s**.
+- Si una fuente remota supera el deadline, el agente aplica degradación elegante (*graceful degradation*), reporta la fuente como `DEGRADADA` y prosigue con los datos locales en disco.
+- Se previene la inyección de comandos sanitizando todo texto del usuario interpolado en CLI (`tema <= 120` caracteres alfanuméricos seguros).
 
-* 🚀 **`1` o `ejecútalo`**: Inicia la fase de ejecución (crea el plan y solicita confirmación humana).
-* 🔄 **`2` o `refinar: [ajuste]`**: Aplica una corrección o detalle específico.
-* 🔀 **`3` o `variantes`**: Genera la versión alternativa complementaria.
-* 📁 **`4` o `archivar`**: Guarda el prompt en `memory-bank/prompts/CATALOGO_HISTORICO_PROMPTS_OPTIMIZADOS.md`.
-* 🔬 **`5` o `profundizar`**: Escala la directiva al Modo 5 de Investigación Profunda.
-* ⚙️ **`6` o `con harness`**: Reenvía el prompt optimizado envolviéndolo en la invocación del harness adecuado
-  (`/f-harness <modo> <prompt>`) para que la IA lo ejecute en cadena sobre los motores correctos.
+---
+
+## 📋 7. LINT DE PRE-ENTREGA Y VALIDACIÓN DE SALIDA
+
+Antes de emitir el bloque cuádruple al usuario, el agente debe validar mentalmente el siguiente checklist bloqueante:
+- [ ] ¿El bloque exterior está delimitado por 4 backticks (` ````markdown ```` `)?
+- [ ] ¿Se eliminó cualquier slop, relleno conversacional o disculpa dentro del bloque?
+- [ ] ¿Se verificó que no existan contraseñas, tokens reales o datos sensibles expuestos?
+- [ ] ¿La directiva está calibrada según el arquetipo (LRM vs Estándar)?
+Si cualquier chequeo falla, se corrige antes de emitir la respuesta.
+
+---
+
+## 📊 8. FICHA TECNICA Y RADAR DE CALIDAD
+
+Fuera del bloque cuádruple de código, el agente entrega la evaluación objetiva:
+- Claridad y Precisión: `[0-10]`
+- Blindaje y Restricciones: `[0-10]`
+- Determinismo de Salida: `[0-10]`
+- Eficiencia de Tokens: `[0-10]`
+
+---
+
+## 🔄 9. IDEMPOTENCIA Y CONTROL DE ESTADO
+
+- Cada sesión de optimización es idempotente y no genera efectos secundarios destructivos en el espacio de trabajo.
+- Las consultas a índices locales operan en modo de solo lectura.
+- El archivado en el catálogo histórico (`memory-bank/prompts/CATALOGO_HISTORICO_PROMPTS_OPTIMIZADOS.md`) se realiza mediante operaciones append-only bajo verificación de integridad.
+
+---
+
+## 📤 10. MENÚ DE CIERRE INTERACTIVO (LETRAS A-F)
+
+Al entregar la directiva optimizada, presenta estas opciones de acción inmediata utilizando letras para prevenir colisiones con los modos numéricos:
+
+* 🚀 **`a` o `ejecútalo`**: Inicia la ejecución directa (crea plan y solicita confirmación si escala a R2/R3).
+* 🔄 **`b` o `refinar: [detalle]`**: Ajusta un aspecto específico del prompt entregado.
+* 🔀 **`c` o `variantes`**: Genera la versión complementaria (Determinista vs Creativa).
+* 📁 **`d` o `archivar`**: Almacena la directiva en `memory-bank/prompts/CATALOGO_HISTORICO_PROMPTS_OPTIMIZADOS.md`.
+* 🔬 **`e` o `profundizar`**: Escala la directiva al Modo 5 de Investigación Profunda.
+* ⚙️ **`f` o `con harness`**: Envuelve la directiva optimizada con la invocación `/f-harness <modo>` seleccionada.
+
+---
+
+## 🌐 11. COMPATIBILIDAD MULTI-AGENTE (TRINIDAD CANÓNICA)
+
+| Entorno / Agente | Estado | Mecanismo de Integración |
+|---|:---:|---|
+| **Antigravity IDE** | 🟢 Nativo | Lectura en `.agents/skills/f-mejora-prompt/SKILL.md` con menú Bento interactivo |
+| **OpenCode Desktop / CLI** | 🟢 Sincronizado | Enlace simbólico en `~/.opencode/skills/f-mejora-prompt` vía `sync_skills_multiagent.sh` |
+| **DeepSeek Harness (`dsh`)** | 🟢 Sincronizado | Enlace SSOT en `~/.dsh/` y perfiles de ejecución compartidos |

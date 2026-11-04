@@ -12,7 +12,7 @@ triggers:
   - curar notebooklm
 ---
 
-# Skill: Optimizador y Curador Soberano de NotebookLM (`f-opti-notebooklm` v1.1)
+# Skill: Optimizador y Curador Soberano de NotebookLM (f-opti-notebooklm v1.1.0)
 
 > **Propósito**: Mantener la base de verdad de Google NotebookLM en máxima integridad y profundidad técnica. Proporciona un flujo guiado menu-first para enriquecer cuadernos con nuevas fuentes externas, hallazgos de sesiones y transcripciones pasadas, generar resúmenes ejecutivos para el Memory Bank y auditar la cobertura de los cuadernos activos (SSOT: `python3 SCRIPTS/notebooklm_curator.py --list`; nunca fijar el número en el texto).
 
@@ -28,7 +28,7 @@ Al invocar `/f-opti-notebooklm`, `/opti-notebooklm` o solicitar curar/optimizar 
 ╚═══════════════════════════════════════════════════════════════════╝
 
 ### 📚 Paso 1: Selecciona el o los Cuadernos a Optimizar:
-- `[0]` **Todos los Cuadernos** (11 cuadernos activos / 1,500+ fuentes)
+- `[0]` **Todos los Cuadernos** (Consulta dinámica de cuadernos activos vía SSOT)
 - `[1]` 🐝 **BEE_IoT** (ESP32, LoRa, MQTT, Sensores)
 - `[2]` 📖 **BRANDING** (Design Systems, Manuales, UI Luxury)
 - `[3]` 🌳 **KUAMIKIACHI** (ONG, Arquitectura Web, Comunidad)

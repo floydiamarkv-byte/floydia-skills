@@ -1,0 +1,121 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8">
+<title>Harness FloydIA v5.1</title>
+<style>
+  *{box-sizing:border-box}
+  body{width:min(1000px,100%);margin:0;padding:0 0 8px;color:var(--foreground);font-size:13px;line-height:1.45}
+  h1{font-size:17px;margin:0 0 2px;letter-spacing:-.01em}
+  h2{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted-foreground);margin:22px 0 8px;font-weight:600}
+  .sub{color:var(--muted-foreground);font-size:11.5px;margin-bottom:14px}
+  .kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+  .kpi{border:1px solid var(--border);border-radius:9px;padding:9px 10px;background:var(--card)}
+  .k-lbl{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted-foreground)}
+  .k-val{font-size:19px;font-weight:650;margin-top:2px;font-variant-numeric:tabular-nums}
+  .k-sub{font-size:10.5px;color:var(--muted-foreground);margin-top:1px}
+  .ok{color:#3fa66a} .bad{color:#d9534f} .warn{color:#d9a23f}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .card{border:1px solid var(--border);border-radius:9px;padding:11px 12px;background:var(--card)}
+  table{width:100%;border-collapse:collapse;font-size:11.5px}
+  th{text-align:left;font-weight:600;color:var(--muted-foreground);font-size:10px;text-transform:uppercase;
+     letter-spacing:.05em;border-bottom:1px solid var(--border);padding:4px 5px}
+  td{padding:4px 5px;border-bottom:1px solid color-mix(in oklab,var(--border) 55%,transparent);vertical-align:middle}
+  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10.5px}
+  .num{text-align:right;font-variant-numeric:tabular-nums}
+  .pill{font-size:9.5px;padding:1px 5px;border-radius:4px;border:1px solid currentColor}
+  .bar{height:7px;border-radius:4px;background:color-mix(in oklab,var(--border) 60%,transparent);overflow:hidden;margin-top:5px}
+  .bar span{display:block;height:100%}
+  .barlbl{font-size:10px;color:var(--muted-foreground);margin-top:2px;font-variant-numeric:tabular-nums}
+  .w{text-align:left}
+
+  .wl{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted-foreground)}
+  .wv{font-size:17px;font-weight:650;font-variant-numeric:tabular-nums;margin:2px 0 1px;letter-spacing:-.01em}
+  .ws{font-size:10.5px;color:var(--muted-foreground)}
+  .bh{display:flex;gap:8px;align-items:baseline;margin-bottom:4px}
+  .bl{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted-foreground)}
+  .bv{font-size:15px;font-weight:650;font-variant-numeric:tabular-nums}
+  ul.acc{list-style:none;padding:0;margin:0;font-size:11.5px}
+  ul.acc li{padding:3px 0;border-bottom:1px dotted color-mix(in oklab,var(--border) 60%,transparent)}
+  .note{font-size:11px;color:var(--muted-foreground);margin-top:6px}
+  .tag{display:inline-block;font-size:10px;border:1px solid var(--border);border-radius:5px;padding:1px 6px;margin-right:4px}
+</style></head><body>
+<h1>Harness FloydIA v5.1 · control de estado</h1>
+<div class="sub">generado 2026-11-07 10:04 desde <span class="mono">out/*.json</span> ·
+sin cifras escritas a mano · modo <b>opencode_go_triad_r3_gate</b></div>
+
+<div class="kpis">
+  <div class='kpi'><div class='k-lbl'>Bolsa única</div><div class='k-val ok'>60 $</div><div class='k-sub'>12 $ / 5 h · 30 $ / semana</div></div>
+  <div class='kpi'><div class='k-lbl'>Uso mensual</div><div class='k-val ok'>46.0 %</div><div class='k-sub'>según usage Go</div></div>
+  <div class='kpi'><div class='k-lbl'>Modelos</div><div class='k-val ok'>79</div><div class='k-sub'>79 conformes</div></div>
+  <div class='kpi'><div class='k-lbl'>GO / FREE</div><div class='k-val ok'>8/8 · 1/8</div><div class='k-sub'>banco ciego v2, pass_all</div></div>
+  <div class='kpi'><div class='k-lbl'>Coste GO</div><div class='k-val ok'>0.023354 $</div><div class='k-sub'>banco v2 completo</div></div>
+</div>
+
+<h2>Ventanas de allowance</h2>
+<div class="grid">
+  <div class="card w"><div class="wl">Ventana 5 h</div>
+    <div class="wv">0.45 %</div>
+    <div class="ws">0.0538 $ de 12.0 $ · rolling, reset en el resetsAt real</div></div>
+  <div class="card w"><div class="wl">Semana</div>
+    <div class="wv">0.18 %</div>
+    <div class="ws">0.0538 $ de 30.0 $ · calendario, lunes 00:00 UTC</div></div>
+</div>
+<div class="note">Lectura de <span class="mono">GET /zen/go/v1/usage</span>: ok</div>
+
+<h2>Criterios de aceptación</h2>
+<div class="card"><ul class="acc"><li><span class='ok'>✔</span> <b>FREE $0,00 + prueba negativa</b> — 3 casos abortados · delta allowance 0</li><li><span class='ok'>✔</span> <b>GO ≤ 20 % ventana 5 h</b> — 0.0538 $ de 12.0 $</li><li><span class='ok'>✔</span> <b>Nombres conformes</b> — 79/79 · 0 hallazgos</li><li><span class='ok'>✔</span> <b>0 MCP caídos del SSOT</b> — crawl4ai deshabilitado por arranque 30,2 s</li><li><span class='ok'>✔</span> <b>Suite sin deriva</b> — overlay 62 drops · edad 0.0 d</li><li><span class='ok'>✔</span> <b>Recall@1 ≥ 9/10</b> — recuperación 10/10 · respuesta FREE 10/10 · GO 10/10</li><li><span class='ok'>✔</span> <b>Conmutación P99 ≤ 5 s</b> — P99 1.49 ms en 40 conmutaciones (atomic rename)</li><li><span class='ok'>✔</span> <b>HP45 propagado</b> — 9 archivos · 8 md5 idénticos · canario CANARY-OK</li></ul></div>
+
+<h2>Modelos con sonda real (tools / visión / factor)</h2>
+<div class="card"><table>
+<tr><th>ID canónico</th><th>Estado</th><th>CTX</th><th>Modo</th><th>Tools</th><th>Visión</th><th>Factor</th></tr>
+<tr><td class='mono'>nim/google/diffusiongemma-26b-a4b-it</td><td><span class='pill ok'>ACTIVE</span></td><td class='mono'>?</td><td>F</td><td class='num'>3/3</td><td>sí</td><td class='num'>—</td></tr><tr><td class='mono'>nim/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning</td><td><span class='pill ok'>ACTIVE</span></td><td class='mono'>?</td><td>F</td><td class='num'>3/3</td><td>sí</td><td class='num'>—</td></tr><tr><td class='mono'>nim/nvidia/nemotron-3-ultra-550b-a55b</td><td><span class='pill ok'>ACTIVE</span></td><td class='mono'>?</td><td>F</td><td class='num'>3/3</td><td>—</td><td class='num'>—</td></tr><tr><td class='mono'>nim/nvidia/nemotron-3.5-bolt-e4b</td><td><span class='pill ok'>ACTIVE</span></td><td class='mono'>?</td><td>F</td><td class='num'>3/3</td><td>—</td><td class='num'>—</td></tr><tr><td class='mono'>nim/nvidia/nemotron-3.5-lightning-30b-a3b</td><td><span class='pill ok'>ACTIVE</span></td><td class='mono'>?</td><td>F</td><td class='num'>3/3</td><td>—</td><td class='num'>—</td></tr><tr><td class='mono'>nim/z-ai/glm-5.3-flash</td><td><span class='pill ok'>ACTIVE</span></td><td class='mono'>?</td><td>F</td><td class='num'>3/3</td><td>—</td><td class='num'>1.0</td></tr><tr><td class='mono'>opencode_go/deepseek-v4-pro</td><td><span class='pill ok'>ACTIVE</span></td><td class='mono'>1M</td><td>GO</td><td class='num'>3/3</td><td>—</td><td class='num'>4.0</td></tr><tr><td class='mono'>opencode_go/deepseek-v4.1-flash</td><td><span class='pill ok'>ACTIVE</span></td><td class='mono'>1M</td><td>GO</td><td class='num'>3/3</td><td>—</td><td class='num'>0.6</td></tr><tr><td class='mono'>opencode_go/glm-5.3-flash</td><td><span class='pill ok'>ACTIVE</span></td><td class='mono'>1M</td><td>GO</td><td class='num'>3/3</td><td>—</td><td class='num'>1.0</td></tr>
+</table>
+<div class="note">Solo aparecen los modelos con <span class="mono">tools</span> medido; el resto del catálogo lleva <span class="mono">[?]</span> en su nombre porque su contexto no está publicado.</div></div>
+
+<h2>Routing vigente</h2>
+<div class="grid">
+  <div class="card"><b>GO — criterio</b>
+    <table>
+      <tr><th>Rol</th><th>Modelo</th></tr>
+      <tr><td>Arquitectura</td><td class="mono">opencode_go/deepseek-v4-pro</td></tr>
+      <tr><td>Estándar</td><td class="mono">opencode_go/deepseek-v4.1-flash</td></tr>
+      <tr><td>Auxiliares que deciden</td><td class="mono">deepseek-v4-pro</td></tr>
+      <tr><td>Formato / voz</td><td class="mono">nim_local/z-ai/glm-5.3-flash</td></tr>
+    </table>
+  </div>
+  <div class="card"><b>FREE — $0,00</b>
+    <table>
+      <tr><th>Rol</th><th>Modelo</th></tr>
+      <tr><td>Trabajo</td><td class="mono">nim_local/deepseek-ai/deepseek-v4.1-flash</td></tr>
+      <tr><td>Fallback</td><td class="mono">opencode_go/deepseek-v4-pro</td></tr>
+      <tr><td>Visión</td><td class="mono">nim_local/google/diffusiongemma-26b-a4b-it</td></tr>
+      <tr><td>OpenRouter</td><td class="mono">13 free con tools</td></tr>
+    </table>
+  </div>
+</div>
+
+<h2>Hallazgos que cambiaron el diseño</h2>
+<div class="card">
+<table>
+<tr><th>H</th><th>Hallazgo medido</th><th>Antídoto aplicado</th></tr>
+<tr><td>H-01</td><td>deepseek-v4.1-flash gasta 2 891–5 476 tokens de razonamiento y trunca con max_tokens &lt; 12k</td><td>max_tokens ≥ 12k en artefactos; auxiliares cortos fuera de flash</td></tr>
+<tr><td>H-02</td><td>flash con max_tokens 60–150 devuelve <b>vacío</b>; con 400 → circuit breaker «repetitive»</td><td>Pro para decidir, GLM flash para formatear</td></tr>
+<tr><td>H-03</td><td>GO flash 429 «overloaded» en peak 01–04 UTC</td><td>fallback DeepSeek en NIM + v4-pro</td></tr>
+<tr><td>H-04</td><td>Tres cifras de bolsa (60 / 170 / 1320)</td><td>purga a 60 y monitor que ya no suma carteras</td></tr>
+<tr><td>H-05</td><td>82/82 nombres con gramática vieja; 9 contextos mentidos</td><td>82 nombres generados + ctx purgado · lint 0</td></tr>
+<tr><td>H-06</td><td>Allowlist 4/10 muerta; Suite con 62 ids inexistentes</td><td>allowlist generada + overlay que la Suite consume</td></tr>
+</table></div>
+
+<h2>Banco publicable §6 (ciego · semilla 42 · 3 reps)</h2>
+<div class="card">
+<table><tr><th>Tarea</th><th>GO</th><th>FREE</th></tr><tr><td class='mono'>T1_hero</td><td class='num'>100%</td><td class='num'>67%</td></tr><tr><td class='mono'>T2_cls</td><td class='num'>100%</td><td class='num'>67%</td></tr><tr><td class='mono'>T3_schema</td><td class='num'>100%</td><td class='num'>67%</td></tr><tr><td class='mono'>T4_onpage</td><td class='num'>100%</td><td class='num'>67%</td></tr><tr><td class='mono'>T5_brief</td><td class='num'>100%</td><td class='num'>67%</td></tr><tr><td class='mono'>T6_css</td><td class='num'>100%</td><td class='num'>67%</td></tr><tr><td class='mono'>T7_vision</td><td class='num'>100%</td><td class='num'>100%</td></tr><tr><td class='mono'>T8_tools</td><td class='num'>100%</td><td class='num'>67%</td></tr></table>
+<div class="note">McNemar p = 0.0156 · b=7 · c=0 · coste GO 0.023354 $
+<br>FREE re-medido tras 7 cortes por <span class="mono">circuit breaker</span>: el resultado se reprodujo idéntico · n=8 = regresión, no ranking.</div>
+</div>
+
+<h2>Propagación</h2>
+<div class="card">
+<span class="tag">HP15</span> catálogo 79 modelos · lint 0 · proxy 4 cuentas<br>
+<span class="tag">HP45</span> 9 archivos · 8 checksums idénticos · canario <span class="mono">CANARY-OK</span> · DSH por perfiles (settings.yaml no existe)<br>
+<span class="tag">Suite 2.0</span> overlay 62 drops · 4 ctx · TTL 7 d<br>
+<span class="tag">OpenCode</span> default <span class="mono">deepseek-v4.1-flash</span> · small <span class="mono">deepseek-v4.1-flash (NIM)</span>
+</div>
+</body></html>

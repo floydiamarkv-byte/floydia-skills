@@ -40,6 +40,10 @@
 5. **Ninguna cifra sin traza**: si citas un coste, un contexto o un ID, adjunta el comando que lo produjo.
 6. **Un MCP deshabilitado no es un MCP caído.** `✗ disabled` es intencional; el fallo es `✗` a secas.
 7. **Informe a disco + JSON en el chat.** No vuelques el informe entero en la conversación.
+9. **Cada modelo se comprueba contra el catálogo de SU proveedor.** Un modelo de Google validado contra
+   el catálogo del proxy NIM sale «muerto» y es falso: pasó dos veces en la misma corrida (DSH y Antigravity).
+10. **R4 tiene dos relojes:** control (health, usage, catálogo, SSH) ≤ 20 s; **inferencia 90-120 s**.
+   Un arranque en frío de 49 s es normal y no viola el anti-hang.
 8. **Español**, telegráfico. Un fallo documentado vale más que un verde inventado.
 
 ---
@@ -303,6 +307,12 @@ F8 · Informe — `.session/reporte_verif_hermes_v32.md` + JSON + `sha256sum`.
    cron. Un `no_verificado` honesto suma; un verde prestado resta.
 4. **Un solo ROJO de entorno** (MCP habilitado caído, proxy abajo, runtime sin recargar) tumba la
    certificación conjunta aunque los otros tres estén verdes.
+
+## Adjudicación de disensos (obligatoria)
+
+Si un agente devuelve `NO CERTIFICADO`, **no se promedia**: se adjudica riesgo por riesgo con evidencia
+y se distingue error de categoría (catálogo ajeno, reloj ajeno) de defecto real. El disenso documentado
+vale más que el consenso sin evidencia; el disenso mal fundado se refuta con el comando, no con la opinión.
 
 ## Cuándo re-ejecutar
 

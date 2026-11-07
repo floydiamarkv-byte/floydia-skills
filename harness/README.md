@@ -22,6 +22,7 @@ python3 scripts/harness_full_audit.py --run --apply    # escribe el SSOT (requie
 | `scripts/apply_model_names.py` | aplica `[ESTADO][CTX][MODO]` desde el registro |
 | `scripts/gen_c7_allowlist.py` | allowlist de modelos gratuitos desde el catálogo vivo |
 | `scripts/suite_overlay_gen.py` | overlay que un panel consume en vez de poseer su propia lista |
+| `scripts/sync_mcp_projection.py` | reconstruye la proyección MCP por cliente desde el SSOT (`--check` para CI) |
 | `bench/model_state_registry.py` | registro con TTL + lint de nombres |
 | `bench/bench_publicable.py` | banco ciego: VCR, seed fija, frío/caliente, McNemar |
 | `docs/` | informe, nomenclatura, política de memoria y mapa de 7 capas |

@@ -12,10 +12,32 @@ import time
 import urllib.request
 from pathlib import Path
 
-PROJ = Path("<PROYECTO>")
+def _resolver_proj() -> Path:
+    """Raiz del proyecto FloydIA, sin placeholders.
+
+    Orden: FLOYDIA_PROJECT_ROOT -> ascendente desde este script buscando
+    SCRIPTS/harness_mode.json -> cwd. El literal `<PROYECTO>` que habia aqui
+    (fix 2026-11-11) hacia que el generador no arrancase fuera de la maquina
+    donde se escribio: FileNotFoundError '<PROYECTO>/scratch/harness_v51/...'.
+    """
+    import os
+
+    env = os.environ.get("FLOYDIA_PROJECT_ROOT")
+    if env:
+        return Path(env).expanduser().resolve()
+    for base in Path(__file__).resolve().parents:
+        if (base / "SCRIPTS" / "harness_mode.json").is_file():
+            return base
+    return Path.cwd()
+
+
+PROJ = _resolver_proj()
 HERE = PROJ / "scratch/harness_v51"
 OUT = HERE / "out"
-DEST = HERE / "dashboard.html"
+# DEST configurable: por defecto el artefacto vivo del harness; FLOYDIA_DASHBOARD_OUT
+# permite escribir la copia publicada (harness/dashboard.html) sin editar el script.
+DEST = Path(__import__("os").environ.get(
+    "FLOYDIA_DASHBOARD_OUT", str(HERE / "dashboard.html"))).expanduser()
 
 
 def jload(p, default=None):

@@ -290,7 +290,7 @@ graph TB
     
     subgraph "Red Local"
         MK["🛡️ MikroTik (192.168.1.1)<br/>RouterOS v7"]
-        HP45["💻 HP45 Réplica (192.168.1.200)"]
+        HP45["💻 HP45 Réplica (192.168.1.205)"]
     end
     
     subgraph "Cloud / APIs"

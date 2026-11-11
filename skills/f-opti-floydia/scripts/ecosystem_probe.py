@@ -7,7 +7,7 @@ Audita en paralelo:
 1. HP15 Local: CPU, RAM, ZRAM, PSI (Pressure Stall), I/O, Load Average, Sockets y Procesos.
 2. Nodos Remotos (TCP Probes con timeout de 1.5s):
    - MikroTik Gateway (192.168.1.1:80)
-   - HP45 Réplica (192.168.1.200:22)
+   - HP45 Réplica (192.168.1.205:22)
    - Proxmox PVE (192.168.1.220:8006)
    - CT114 Playwright WS (192.168.1.238:3000)
    - CT114 FlareSolverr (192.168.1.238:8191)
@@ -154,7 +154,7 @@ def run_full_probe():
     # 1. Nodos de infraestructura
     infra_targets = {
         "MikroTik Gateway": ("192.168.1.1", 80),
-        "HP45 Réplica": ("192.168.1.200", 22),
+        "HP45": ("192.168.1.205", 22),
         "Proxmox PVE": ("192.168.1.220", 8006),
         "CT114 Playwright WS": ("192.168.1.238", 3000),
         "CT114 FlareSolverr": ("192.168.1.238", 8191),

@@ -25,6 +25,11 @@ La suite **FloydIA Agent Skills** reúne los protocolos y herramientas agéntica
 | **`f-handon-handoff`** | `/f-handoff`, `/f-handon` | **Continuidad Agéntica**: Persistencia de contexto en journals inmutables y traspaso de sesión sin pérdida de estado. |
 | **`f-master-update`** | `/f-master-update` | **Super Suite SRE**: Mantenimiento determinista del sistema operativo, memoria, agentes y sincronización NotebookLM. |
 | **`f-investiga`** | `/f-investiga` | **Investigación Profunda**: Modos Indagación (NotebookLM y vault) y Enjambre (consenso multi-modelo en paralelo). |
+| **`f-harness-360`** | `/f-harness-360` | **Auditoría Total en una Llamada**: Pipeline completo del harness, artefactos y veredicto global sin recordar el runbook. |
+| **`f-dialogo-externo`** | `/f-dialogo-externo` | **Diálogo Externo Iterativo**: Conduce el navegador del operador en 4 rondas (encuadre, evidencia, corrección, cierre) con estado en disco. |
+| **`f-enjambre-externo`** | `/f-enjambre-externo` | **Consulta Multi-Modelo con Cotejo**: Fan-out por API y sitios manuales, fan-in automático a COTEJO.md con MANIFEST.sha256. |
+| **`f-scraper`** | `/f-scraper` | **Extractor Web por Capas**: MarkItDown, Crawl4AI, Scrapling, FlareSolverr, Crawlee y Agent-Reach con esquema JSON. |
+| **`f-opti-notebooklm`** | `/f-opti-notebooklm` | **Curador de NotebookLM**: Selección de cuadernos, enriquecimiento de fuentes, auditoría de cobertura e informes para el Memory Bank. |
 
 ---
 

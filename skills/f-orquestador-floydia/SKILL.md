@@ -1,15 +1,7 @@
 ---
 name: f-orquestador-floydia
-description: "Motor de orquestación multi-agente y arquitectura directiva de FloydIA. Asume el rol de Arquitecto de Software y Agente Director para descomponer proyectos complejos (webs, apps, algoritmos), definir Design Tokens/arquitectura, delegar la lógica algorítmica pesada al arnés local (DeepSeek-R1 / Nemotron 3 Ultra 550B vía harness_dispatch.py) e integrar y validar el resultado final con consistencia estética y funcional. USAR cuando el usuario invoque /f-orquestador, f-orquestador-floydia, orquestar prompt o añada 'f-orquestador-floydia' al final de su directiva."
+description: "Arquitecto y director que transforma requerimientos de software o web delegando subtareas al arnes local a coste cero. Activa en descomposicion con contrato de diseno, integracion con QA visual o estandar web de 16 requerimientos. No usar para calibrar prompts ni certificar evidencia."
 version: 1.0.0
-triggers:
-  - /f-orquestador
-  - /f-orquestador-floydia
-  - /orquestador
-  - f-orquestador-floydia
-  - f-orquestador
-  - orquestador floydia
-  - modo arquitecto
 ---
 
 # Skill: Orquestador Multi-Agente FloydIA (`f-orquestador-floydia` v1.0)

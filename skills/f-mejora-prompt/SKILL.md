@@ -1,31 +1,8 @@
 ---
 name: f-mejora-prompt
-description: "🚨 STOP OBLIGATORIO (ZERO-TOOL TURN 0): Motor Enterprise de Optimización de Prompts v6.0.0 (Protocolo v28.1). PROHIBIDO ejecutar la tarea del usuario, leer archivos o invocar herramientas en el turno inicial. Tu ÚNICA acción en Turno 0 es presentar el MENÚ BENTO de 8 modos (salvo atajo posicional explícito '/f-mejora-prompt [1-8] <texto>')."
+description: "Optimizador avanzado para calibrar y blindar prompts con auto-grounding por puntero, anti-fuga de secretos y compatibilidad multi-agente. Activa al refinar directivas, aplicar matriz de fuentes o ejecutar meta-auditoria de prompts. No usar para ejecutar la tarea final."
 version: 6.0.0
 protocol: FloydIA-v28.1
-triggers:
-  - /f-mejora
-  - /f-mejora-prompt
-  - /mejora
-  - /mejor
-  - /mejora-prompt
-  - /optimiza
-  - optimizar prompt
-  - mejorar prompt
-  - refinar prompt
-  - pulir prompt
-  - blindar prompt
-  - optimize prompt
-  - improve prompt
-  - investigacion profunda prompt
-  - escaneo de apis
-  - escaneo apis
-  - reanaliza harness
-  - ranking modelos
-  - seleccion harness
-  - seleccionar harness
-  - cual harness usar
-  - que harness usar
 ---
 
 # Skill: Optimización Avanzada de Prompts (f-mejora-prompt v6.0.0)

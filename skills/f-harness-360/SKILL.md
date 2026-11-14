@@ -1,17 +1,8 @@
 ---
 name: f-harness-360
-description: "Auditoría TOTAL del harness en una sola llamada: escanea APIs, evalúa, consulta el enjambre y a una IA externa, propone y (con token) redefine el harness. USAR con /harness-360, /auditoria-total, /redefinir-harness-total, 'audita todo el harness', 'revisa todo y dime qué cambiar'."
+description: "Ejecuta la auditoria integral y el pipeline completo del arnes en una llamada para emitir artefactos y veredicto. Activa en corridas de punta a punta o diagnostico global sin descomponer proyectos. No usar para ajustar modos o telemetria puntual de f-harness."
 version: 1.0.0
 author: HermesHP15
-triggers:
-  - /harness-360
-  - /auditoria-total
-  - /auditoria-completa
-  - /redefinir-harness-total
-  - audita todo el harness
-  - revisa todo el harness
-  - escanea todo y redefine
-  - auditoria total del harness
 metadata:
   hermes:
     tags: [harness, routing, audit, swarm, orchestration, evidence]

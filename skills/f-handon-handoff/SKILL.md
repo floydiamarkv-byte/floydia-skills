@@ -1,19 +1,7 @@
 ---
 name: f-handon-handoff
-description: "Continuidad agéntica, cierre de sesión y traspaso de memoria. Invocar con /f-handon o /f-handoff."
+description: "Construye un puente determinista append-only entre sesiones de Antigravity IDE, Obsidian Memory Bank y terminales. Activa al persistir contexto entre sesiones, registrar decisiones tecnicas o generar un handoff inmutable. No usar para actualizar el sistema ni auditar el arnes."
 version: 2.0.0
-triggers:
-  - /f-handoff
-  - /f-handon
-  - /f-handon-handoff
-  - handoff!!
-  - /handoff
-  - handoff
-  - handon!!
-  - /handon
-  - handon
-  - continuar sesion
-  - cerrar sesion
 ---
 
 # Skill: Protocolo de Continuidad Agéntica (`f-handon-handoff` v2.0)

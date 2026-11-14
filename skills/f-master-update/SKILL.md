@@ -1,23 +1,8 @@
 ---
 name: f-master-update
-description: "🚨 STOP OBLIGATORIO (ZERO-TOOL TURN 0): Super Suite SRE Enterprise & Master Update Hub v2.0.0 (Protocolo v28.1). Mantenimiento soberano y actualización en 2 niveles (OS, Agentes, Memoria, Grafo AST y NotebookLM). PROHIBIDO ejecutar scripts o mutar el sistema en Turno 0: presenta siempre el Menú Bento Nivel 1 (salvo atajo explícito con opción numérica)."
+description: "Ejecuta la actualizacion del sistema en dos niveles abarcando OS, agentes, memoria, grafo y NotebookLM con guardrails SRE. Activar para aplicar cambios por tiers de riesgo, gestionar el ledger idempotente, o recuperar contingencias. No usar para operativa rutinaria del arnes."
 version: 2.0.0
 protocol: FloydIA-v28.1
-triggers:
-  - /f-master-update
-  - /master-update
-  - /f-update
-  - /f-opti
-  - /actualizar-todo
-  - /super-update
-  - master update
-  - optimizar y actualizar
-  - full sovereign sweep
-  - suite de mantenimiento
-  - sync git repos
-  - auditoria git
-  - actualizar repos
-  - flatpak update
 ---
 
 # Super Skill: Master Update & SRE Sovereign Governor (f-master-update v2.0.0)

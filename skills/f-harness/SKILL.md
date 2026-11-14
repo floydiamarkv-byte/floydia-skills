@@ -1,37 +1,7 @@
 ---
 name: f-harness
-description: "Centro de control unificado del Harness FloydIA (antes f-harness + f-harness-select + f-harness-workflow, fusionados 2026-10-13). Cuatro modos: (1) Operativa/SRE — routing de 11 motores $0.00, doctor de DSH, telemetría; (2) Selector de MODO — conmutar las 6 cadenas de prioridades (AGY, Nemotron, Kilo, Cloudflare, Pool Free); (3) Metodología WORKFLOW — roles Líder/Explorador/Implementador/Revisor para tareas complejas; (4) ESCANEO DE APIs + RANKING — auditoría empírica del .env, ranking de inteligencia y propuesta de redefinición de la cadena. USAR con /f-harness, /harness, /modo, /harness-mode, /harness-select, /harness-workflow, /elegir-modelo, /prioridades, /model-router, /api-scan, /escanear-apis, /ranking-modelos, /redefinir-harness o ante caídas de motores/DSH. NO USAR para descomponer proyectos (eso es f-orquestador-floydia) ni para consultas triviales."
+description: "Centro unificado del Harness FloydIA para operativa SRE, telemetria y seleccion de modo contra harness_mode.json. Activa en doctor de DSH, cadenas de prioridades o escaneo y ranking de APIs. No usar para la auditoria integral ni actualizacion del sistema."
 version: 4.2.0
-triggers:
-  - /f-harness
-  - /harness
-  - /f-harness-select
-  - /harness-select
-  - /f-harness-workflow
-  - /harness-workflow
-  - /modo
-  - /harness-mode
-  - /elegir-modelo
-  - /prioridades
-  - /model-router
-  - /routing
-  - /api-scan
-  - /escanear-apis
-  - /ranking-modelos
-  - /auditar-apis
-  - /redefinir-harness
-  - /harness-api-scan
-  - harness floydia
-  - cadena de motores
-  - cambiar modo del harness
-  - cambiar orden de motores
-  - deepseek no arranca
-  - dsh no arranca
-  - dsh se cae
-  - harness doctor
-  - reparar dsh
-  - arnes agéntico
-  - harness-workflow
 ---
 
 # Skill: f-harness — Centro Unificado del Harness FloydIA

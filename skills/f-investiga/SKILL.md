@@ -1,26 +1,8 @@
 ---
 name: f-investiga
-description: "Investigación en dos modos, con menú. INDAGACION: investiga a fondo una sola cosa usando fuentes primarias, NotebookLM y el vault. ENJAMBRE: contrasta varios motores y fuentes en paralelo, con verificacion de citas y consenso. Elige el modo y lee solo ese cuerpo. Dispadores en el campo triggers."
+description: "Enruta investigacion documental sobre fuentes primarias, vault y NotebookLM, o sintesis multi-fuente con contraste y verificacion de citas. Activa al investigar corpus o verificar citas. No usar para curar cuadernos, lanzar fan-out externo ni hacer scraping crudo."
 version: 3.0.0
 license: MIT
-triggers:
-  - /f-investiga
-  - /investigar
-  - /deep-research
-  - investiga a fondo
-  - investigación profunda
-  - investigacion exhaustiva
-  - /f-swarm-research
-  - /swarm-research
-  - swarm research
-  - enjambre de investigacion
-  - investiga en paralelo
-  - contrasta motores
-  - compara motores
-  - quiero N opiniones
-  - que piensan varios modelos
-  - fan-out
-  - dame el consenso de
 ---
 
 # Skill: Investigación (`f-investiga` v3.0) — router de dos modos

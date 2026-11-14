@@ -1,14 +1,7 @@
 ---
 name: f-evidence-engine
-description: "Motor determinista de certificación y verificación de evidencia del FloydIA Agent OS v1.0. Hace cumplir mecánicamente el principio 'Evidencia antes de Afirmar': prohíbe dar por resuelta cualquier tarea sin validar un artefacto técnico concreto (código de salida exit 0, hash SHA256 de archivo o JSON de aserciones de Playwright remoto). USAR antes de cerrar cualquier tarea, generar journals o emitir declaraciones de conformidad técnica. NO USAR para consultas informativas triviales ni tareas R0 de solo lectura."
+description: "Certifica mecanicamente hitos bajo el contrato de evidencia E5 antes de declarar tareas resueltas. Activa al verificar hash SHA256, exit code 0 de suites o aserciones Playwright en CT114. No usar para cierres basados en texto plano ni ejecucion del pipeline 360."
 version: 1.0.0
-triggers:
-  - /f-evidence-engine
-  - /f-evidence
-  - /evidence
-  - certificar tarea
-  - validar evidencia
-  - evidencia antes de afirmar
 ---
 
 # Skill: Evidence & Certification Engine (`f-evidence-engine` v1.0)

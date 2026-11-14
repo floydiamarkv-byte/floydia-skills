@@ -1,15 +1,7 @@
 ---
 name: f-opti-notebooklm
-description: "Curador, optimizador y enriquecedor soberano de la base de verdad Google NotebookLM. Permite seleccionar cuadernos específicos o todos los cuadernos activos (SSOT: `python3 SCRIPTS/notebooklm_curator.py --list`; nunca fijar el número en el texto), buscar y sintetizar fuentes nuevas, enriquecer los cuadernos con hallazgos de sesiones y generar informes temáticos para el Memory Bank. USAR cuando el usuario invoque /f-opti-notebooklm, /opti-notebooklm, /curar-notebooks o solicite enriquecer/auditar cuadernos. NO USAR para consultas de código local sin relación con los cuadernos indexados."
+description: "Curador soberano de NotebookLM para mantener la integridad de cuadernos via notebooklm_curator.py y notebooklm-mcp. Activa al enriquecer cuadernos con transcripciones o hallazgos, auditar cobertura activa o generar resumenes para Memory Bank. No usar para busqueda web abierta."
 version: 1.1.0
-triggers:
-  - /f-opti-notebooklm
-  - /opti-notebooklm
-  - /curar-notebooks
-  - optimizar notebooklm
-  - enriquecer cuadernos
-  - notebooklm opti
-  - curar notebooklm
 ---
 
 # Skill: Optimizador y Curador Soberano de NotebookLM (f-opti-notebooklm v1.1.0)

@@ -1,20 +1,7 @@
 ---
 name: f-update-floydia
-description: "Suite integral de actualización determinista de Arch/EndeavourOS, paquetes AUR, Flatpaks, diagnóstico de firmware, indexación semántica de imágenes, compactación del Memory Bank, Graphify AST y CODEX_FLOYDIA.md. USAR cuando el usuario invoque /f-update, /update, /actualizar, 'actualizar sistema', 'disaster recovery', 'sre sync' o 'actualizar imagenes'. NO USAR para configurar redes MikroTik (usar mikrotik-routeros) ni modificar contenedores Proxmox (usar proxmox-ops)."
+description: "Ejecuta el mantenimiento determinista del ecosistema: actualizaciones de Arch y AUR, Flatpak, firmware, indexacion de activos y regeneracion del CODEX. Activa al actualizar el sistema o recuperar un host. No usar para auditar rendimiento ni para desplegar skills."
 version: 5.2.0
-triggers:
-  - /f-update
-  - /f-update-floydia
-  - /update
-  - update-floydia
-  - /actualizar
-  - actualizar sistema
-  - actualizar imagenes
-  - catalogar imagenes
-  - disaster recovery
-  - sre sync
-  - codex sync
-  - actualizar ecosistema
 ---
 
 # Skill: Suite de Actualización & Disaster Recovery (`f-update-floydia` v5.2)

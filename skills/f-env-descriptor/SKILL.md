@@ -1,18 +1,8 @@
 ---
-name: f-descripcion
-description: "Generador de Descripción Completa del Entorno de Programación (Handoff Document). Levanta y documenta de forma VERIFICADA todo el entorno: hardware, SO, red, Proxmox, workspace, dominios canónicos, skills, agentes/IDEs, MCPs, scripts, memoria persistente, QA y reglas del Protocolo v27; produce un documento de handoff autocontenido (versión exhaustiva de 17 secciones + versión compacta ≤2.000 tokens) para que cualquier otra IA conozca sus recursos desde el primer mensaje. USAR cuando el usuario invoque /f-descripcion, /descripcion, /entorno, /handoff-entorno o pida describir/documentar su entorno o ecosistema. NO USAR para modificar el entorno (solo lectura, salvo archivado aprobado del informe)."
+name: f-env-descriptor
+description: "Alias de compatibilidad de f-descripcion con el mismo cuerpo. Conservado para no romper invocaciones antiguas. No usar para routing ni para trabajo nuevo."
 version: 1.2.0
-triggers:
-  - /f-descripcion
-  - /descripcion
-  - /descripcion-entorno
-  - /entorno
-  - /handoff-entorno
-  - describir entorno
-  - describir ecosistema
-  - documentar entorno
-  - mapa del entorno
-  - qué recursos tengo
+disable-model-invocation: true
 ---
 
 # Skill: Descripción Completa del Entorno (`f-descripcion` v1.0)

@@ -1,14 +1,7 @@
 ---
 name: f-audit-web
-description: "Orquestador del protocolo 'Auditoría externa por copia y pega': tú eres los ojos y las manos de una IA externa potente que solo puede conversar en texto plano por una interfaz web (sin subir archivos ni markdown). Genera el Prompt Semilla, ejecuta rondas de reconocimiento (solo lectura), aplica parches con red de seguridad git y cierra sesión con journal. USAR cuando el usuario invoque /f-audit-web, /audit-web, 'MEJORA <proyecto>' con intención de delegar diagnóstico a una IA externa por chat web, o pegue instrucciones/parches provenientes de una IA externa. NO USAR para diagnóstico propio directo del código (ese es el trabajo de la IA externa, R5) ni para tareas triviales de una sola línea."
+description: "Convierte al agente en ojos y manos de una IA externa de solo texto: genera el prompt semilla, aplica los cambios y devuelve la respuesta por rondas. Activa al auditar con una IA web sin acceso a ficheros. No usar para dialogos con navegador propio ni para fan-out por API."
 version: 1.0.0
-triggers:
-  - /f-audit-web
-  - /audit-web
-  - auditoria externa por copia y pega
-  - audit web
-  - MEJORA /f-audit-web
-  - ojos y manos de la IA externa
 ---
 
 # Skill: Auditoría Externa por Copia y Pega (`f-audit-web` v1.0)

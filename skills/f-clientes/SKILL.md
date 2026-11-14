@@ -1,14 +1,7 @@
 ---
 name: f-clientes
-description: "Gestor de contexto de clientes y proyectos. Enruta al dominio canónico correcto, carga el brief del cliente, presenta tareas pendientes y accesos. USAR cuando el usuario invoque /f-clientes, /clientes, o pida trabajar en un cliente específico (Evergreen, WattSaver, C_Crochet, Kuamikiachi). NO USAR para operaciones técnicas directas sin contexto de cliente."
+description: "Enruta y carga el contexto canonico de cada cliente del portafolio: dominio, brief, accesos, assets y tareas pendientes. Activa al cambiar de cliente o pedir el estado de un proyecto. No usar para investigacion externa ni para curar cuadernos."
 version: 1.0.0
-triggers:
-  - /f-clientes
-  - /clientes
-  - /cliente
-  - cambiar cliente
-  - contexto cliente
-  - brief cliente
 ---
 
 # Skill: Gestor de Contexto de Clientes (`f-clientes` v1.0)

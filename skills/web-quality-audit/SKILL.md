@@ -1,6 +1,6 @@
 ---
 name: web-quality-audit
-description: Run an evidence-led web quality audit covering performance, accessibility (WCAG/a11y, screen reader, keyboard navigation), SEO (meta tags, structured data, sitemaps, search ranking), and best practices (security audit, vulnerabilities, code quality). Use when asked to "audit my site", "review web quality", "run lighthouse audit", "check page quality", "optimize my website", "improve accessibility", "WCAG compliance", "improve SEO", "fix meta tags", "add structured data", "security audit", or "modernize code". Absorbe los antiguos skills accessibility/seo/best-practices (archivados en .agents/archived-skills/fusionados-20261013/, con sus checklists íntegros en disco).
+description: "Audita calidad web con evidencia de navegador y codigo: rendimiento, accesibilidad, SEO, buenas practicas y navegacion agentica, sin fiarse de una nota agregada. Activa al revisar una pagina o un sitio. No usar para SEO de mercado ni para WordPress on-page."
 license: MIT
 metadata:
   author: web-quality-skills

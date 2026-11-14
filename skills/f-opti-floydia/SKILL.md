@@ -1,19 +1,7 @@
 ---
 name: f-opti-floydia
-description: "SRE Governor para auditoría en vivo, diagnóstico de latencia, cuellos de botella, optimización determinista, auditoría de agentes y harness, Prompts Duales para IA Web, mapas mentales del ecosistema, rescate anti-hang y verificación de resiliencia (backup cifrado, heartbeats, guard denylist). USAR cuando el usuario invoque /f-opti, /opti, /opti-floydia, /ecosystem-tune, /sre-probe o pida auditar/optimizar hardware, agentes y latencias. NO USAR para desarrollo frontend ni edición de código de clientes."
+description: "Actua como SRE Governor del ecosistema: audita hardware, red, Proxmox, MikroTik, agentes y cuellos de botella, y propone optimizaciones con evidencia. Activa al diagnosticar rendimiento o salud del ecosistema. No usar para actualizar paquetes ni para el arnes de modelos."
 version: 4.1.0
-triggers:
-  - /f-opti
-  - /f-opti-floydia
-  - /opti
-  - /opti-floydia
-  - /ecosystem-tune
-  - /sre-probe
-  - optimizar ecosistema
-  - auditar ecosistema
-  - diagnosticar cuellos de botella
-  - auditar agentes
-  - mapa del ecosistema
 ---
 
 # Skill: Opti-Floydia & Ecosystem SRE Governor v4.0 (`f-opti-floydia`)

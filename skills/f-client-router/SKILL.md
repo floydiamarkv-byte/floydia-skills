@@ -1,14 +1,8 @@
 ---
-name: f-clientes
-description: "Gestor de contexto de clientes y proyectos. Enruta al dominio canónico correcto, carga el brief del cliente, presenta tareas pendientes y accesos. USAR cuando el usuario invoque /f-clientes, /clientes, o pida trabajar en un cliente específico (PROJECT_ALPHA, PROJECT_BETA, PROJECT_GAMMA, PROJECT_DELTA). NO USAR para operaciones técnicas directas sin contexto de cliente."
+name: f-client-router
+description: "Alias de compatibilidad de f-clientes con el mismo cuerpo. Conservado para no romper invocaciones antiguas. No usar para routing ni para trabajo nuevo."
 version: 1.0.0
-triggers:
-  - /f-clientes
-  - /clientes
-  - /cliente
-  - cambiar cliente
-  - contexto cliente
-  - brief cliente
+disable-model-invocation: true
 ---
 
 # Skill: Gestor de Contexto de Clientes (`f-clientes` v1.0)

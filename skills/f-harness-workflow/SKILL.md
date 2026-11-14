@@ -1,13 +1,8 @@
 ---
 name: f-harness-workflow
-description: "Metodología de ingeniería de arneses (Harness Engineering): Planificación estructurada, roles desacoplados (Líder, Explorador, Implementador, Revisor) y verificación determinista 'Evidencia antes de Afirmar'. USAR cuando se desarrollen tareas complejas de arquitectura, refactors mayores o debugging profundo multi-agente. NO USAR para scripts triviales de una sola línea ni consultas informativas rápidas."
+description: "Alias de compatibilidad del modo workflow de f-harness, ya fusionado alli. Conservado para no romper invocaciones antiguas. No usar para routing ni para trabajo nuevo."
 version: 2.1.0
-triggers:
-  - /f-harness
-  - /f-harness-workflow
-  - /harness
-  - harness-workflow
-  - arnes agéntico
+disable-model-invocation: true
 ---
 
 # Skill: Metodología de Arneses Agénticos (`f-harness-workflow` v2.1)

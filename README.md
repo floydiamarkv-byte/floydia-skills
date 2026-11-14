@@ -30,6 +30,13 @@ La suite **FloydIA Agent Skills** reúne los protocolos y herramientas agéntica
 | **`f-enjambre-externo`** | `/f-enjambre-externo` | **Consulta Multi-Modelo con Cotejo**: Fan-out por API y sitios manuales, fan-in automático a COTEJO.md con MANIFEST.sha256. |
 | **`f-scraper`** | `/f-scraper` | **Extractor Web por Capas**: MarkItDown, Crawl4AI, Scrapling, FlareSolverr, Crawlee y Agent-Reach con esquema JSON. |
 | **`f-opti-notebooklm`** | `/f-opti-notebooklm` | **Curador de NotebookLM**: Selección de cuadernos, enriquecimiento de fuentes, auditoría de cobertura e informes para el Memory Bank. |
+| **`f-audit-web`** | `/f-audit-web` | **Auditoría Externa por Copia y Pega**: el agente es ojos y manos de una IA de solo texto; prompt semilla y rondas de corrección. |
+| **`f-clientes`** | `/f-clientes` | **Contexto de Clientes**: enrutado al dominio canónico, brief, accesos, assets y tareas pendientes por cliente. |
+| **`f-descripcion`** | `/f-descripcion` | **Handoff del Entorno**: documento autocontenido y verificado para que otra IA entienda el entorno sin contexto previo. |
+| **`f-opti-floydia`** | `/f-opti` | **SRE Governor del Ecosistema**: auditoría de hardware, red, Proxmox, MikroTik, agentes y cuellos de botella con evidencia. |
+| **`f-update-floydia`** | `/f-update` | **Actualización y Disaster Recovery**: Arch/AUR, Flatpak, firmware, indexación de activos y regeneración de `CODEX_FLOYDIA.md`. |
+
+> Los IDs `f-client-router`, `f-env-descriptor` y `f-harness-workflow` se conservan como alias de compatibilidad (ocultos del router).
 
 ---
 
